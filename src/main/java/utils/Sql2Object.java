@@ -9,7 +9,7 @@ public class Sql2Object {
 	private static Sql2Object instance = new Sql2Object();
 
 	private Sql2Object() {
-		this.sql2o = new Sql2o("jdbc:mysql://localhost/ohrt", "root", "pass");
+		this.sql2o = new Sql2o("jdbc:mysql://107.180.56.180:3636/wap_sep", "musifyy_dbuser", "musifyy_dbpa$$");
 	}
 
 	public static Sql2Object getInstance() {
