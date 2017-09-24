@@ -24,7 +24,7 @@ public class Main {
 		}
 
 		// routes
-		get("/", MainController.initHome);
+//		get("/", MainController.initHome);
 		get("/login", LoginController.initLoginPage);
 		get("/register", LoginController.initRegisterPage);
 		get("/agents", AgentController.initAgentListPage);

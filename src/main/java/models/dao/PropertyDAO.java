@@ -14,6 +14,7 @@ import models.PropertyImage;
 import models.RentPurpose;
 import models.SellPurpose;
 import models.User;
+import utils.DBConnection;
 import utils.Sql2Object;
 
 public class PropertyDAO {
@@ -33,6 +34,8 @@ public class PropertyDAO {
 	public static List<Row> query(int id, String searchBy, int ownerId, int statusID, int agentAccount,
 			String purposeKey, int type, Integer order, Integer offSet, Integer limit) {
 		try (Connection conn = Sql2Object.open()) {
+			// try (java.sql.Connection conn =
+			// DBConnection.getInstance().getConnection()) {
 			String sqlQuery = "SELECT * FROM property";
 			boolean hasWhere = false;
 			if (id != 0) {
@@ -320,9 +323,9 @@ public class PropertyDAO {
 				property.setApprovedBy(UserDAO.findById(row.getInteger("ApprovedBy")));
 				property.setRegisterDate(row.getDate("RegisterDate"));
 				property.setApprovedDate(row.getDate("ApprovedDate"));
-				if(row.getInteger("AgentAccount") != null)
+				if (row.getInteger("AgentAccount") != null)
 					property.setAgentAccount(UserDAO.findById(row.getInteger("AgentAccount")));
-				
+
 				property.setPurposeKey(row.getString("PurposeKey"));
 				List<PropertyImage> propertyImageList = ProperyImageDAO.findByPropertyId(propertyId);
 				if (propertyImageList != null && !propertyImageList.isEmpty())
@@ -352,7 +355,6 @@ public class PropertyDAO {
 			return property;
 		}
 	}
-	
 
 	public static void updateStatusById(int propertyId, int statusId) {
 		String sqlQuery = "UPDATE property SET StatusID = :statusId WHERE  ID = :propertyId";
