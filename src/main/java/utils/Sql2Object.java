@@ -9,13 +9,7 @@ public class Sql2Object {
 	private static Sql2Object instance = new Sql2Object();
 
 	private Sql2Object() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			this.sql2o = new Sql2o("jdbc:mysql://107.180.56.180:3306/wap_sep", "musifyy_dbuser", "musifyy_dbpa$$");
-//			this.sql2o = new Sql2o("jdbc:mysql://127.0.0.1:3306/wap_sep", "root", "");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.sql2o = new Sql2o("jdbc:mysql://107.180.56.180:3636/wap_sep", "musifyy_dbuser", "musifyy_dbpa$$");
 	}
 
 	public static Sql2Object getInstance() {
