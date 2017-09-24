@@ -1,0 +1,157 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<script type="text/javascript">
+	function submitPropertyListModel() {
+	    document.getElementById("propertyListModelId").submit();
+	}
+	function changePage(itemValue) {
+		document.getElementById("currentPageId").value = itemValue;
+		submitPropertyListModel();
+	}
+</script>
+<!-- banner -->
+<div class="inside-banner">
+	<div class="container"> 
+		<span class="pull-right"><a href="/">Home</a> / Buy, Sell & Rent</span>
+		<h2>Buy, Sell & Rent</h2>
+	</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+	<div class="properties-listing spacer">
+		<form class="" role="form" action="/property/list" method="POST" id="propertyListModelId" name="propertyListModel">		
+			<div class="row">
+				<div class="col-lg-3 col-sm-4 ">
+
+						<div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
+							<input type="text" id="searchText" name="searchBy" class="form-control" placeholder="Search of Properties" value="$propertyListModel.searchBy">
+							<div class="row">
+								<div class="col-lg-6">
+									<select name="searchPurposeTypeId" class="form-control">
+										<option value="0">-- Purpose type --</option>
+										<option value="1">Rent</option>
+										<option value="2">Sell</option>
+									</select>
+								</div>
+								<!--
+								<div class="col-lg-7">
+									<select class="form-control">
+										<option>Price</option>
+										<option>$150,000 - $200,000</option>
+										<option>$200,000 - $250,000</option>
+										<option>$250,000 - $300,000</option>
+										<option>$300,000 - above</option>
+									</select>
+								</div>
+								-->
+								<div class="col-lg-6">
+									<select name="searchPropertyTypeId" class="form-control">
+										<option value="0">-- Property type --</option>
+										<option value="1">House</option>
+										<option value="2">Apartment</option>
+									</select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Find Now</button>
+						</div>
+
+					<!-- start of MOST VIEWED PROPERTY -->
+					<div class="hot-properties hidden-xs">
+						<h4>Hot Properties</h4>
+							#foreach( $hotProperty in $propertyListModel.hotPropertyList )
+								<div class="row">
+									<div class="col-lg-4 col-sm-5"><img src="/uploads/$hotProperty.mainPicturePath" class="img-responsive img-circle" alt="properties"></div>
+									<div class="col-lg-8 col-sm-7">
+										<h5><a href="/property/$hotProperty.id">$hotProperty.name</a></h5>
+										<p class="price">$$numberTool.format("###,###,##0", $hotProperty.purposeType.calculatePrice())</p> 
+									</div>
+								</div>
+	  						#end
+					</div>
+					<!-- end of MOST VIEWED PROPERTY -->
+				</div>
+
+					<div class="col-lg-9 col-sm-8">
+						<div class="sortby clearfix">
+							#set( $pagerCount = 12)
+							#set( $startPageNum = ($propertyListModel.currentPage  - 1) * $pagerCount  + 1) 
+							#set( $currentPage = ($propertyListModel.currentPage  - 1) * $pagerCount  + $propertyListModel.propertyList.size()) 
+							#if ($currentPage > $propertyListModel.totalItemCount)
+							#set ($currentPage = $propertyListModel.totalItemCount)
+							#end
+							<div class="pull-left result">Showing: ($startPageNum - $currentPage) of $propertyListModel.totalItemCount</div>
+							<div class="pull-right">
+								<select class="form-control" name="order" onchange="submitPropertyListModel()">
+									<option value="0">Sort by</option>
+									<option value="0">Register: New to Old</option>
+									<option value="1">Register: Old to New</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+
+
+						<!-- start of MAIN PROPERTY -->
+						#foreach( $property in $propertyListModel.propertyList )
+							<!-- properties -->
+							<div class="col-lg-4 col-sm-6">
+								<div class="properties">
+									<div class="image-holder"><img src="/uploads/$property.mainPicturePath" class="img-responsive" alt="properties">
+										#if ($property.purposeKey == 'Sell')
+											<div class="status sold">
+												<b>${property.class.simpleName}</b> - <i>$property.purposeKey</i>
+											</div>
+										#else
+											<div class="status new">
+												<b>${property.class.simpleName}</b> - <i>$property.purposeKey</i>
+											</div>
+										#end
+									</div>
+									<h4><a href="/property/$property.id">$property.name</a></h4>
+									<p class="price">Price: $$numberTool.format("###,###,##0", $property.purposeType.calculatePrice())</p>
+									<div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">$property.bedroom</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">$property.livingroom</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">$property.parking</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">$property.kitchen</span>
+									</div>
+									<a class="btn btn-primary" href="/property/$property.id">View Details</a>
+								</div>
+							</div>
+							<!-- properties -->
+  						#end
+						<!-- end of MAIN PROPERTY -->
+
+						</div>
+						<div class="row">
+
+							<!-- start of PAGER -->
+							<div class="center">
+								<input type="hidden" name="currentPage" id="currentPageId" value="$propertyListModel.currentPage">
+								<ul class="pagination">
+									<li><a href="#"  onclick="changePage($propertyListModel.currentPage - 1)">«</a></li>
+									#if ($propertyListModel.totalItemCount % $pagerCount == 0)
+										#set ($totalPageCount = $propertyListModel.totalItemCount / $pagerCount)
+									#else
+										#set ($totalPageCount = $propertyListModel.totalItemCount / $pagerCount + 1)
+									#end
+									#set($pagerStart = 1)
+									#set($range = [$pagerStart..$totalPageCount])
+									#foreach($pageNum in $range)
+										#if ($pageNum == $propertyListModel.currentPage)
+											<li class="active"><a href="#" onclick="changePage($pageNum)">$pageNum</a></li>
+										#else
+											<li><a href="#" onclick="changePage($pageNum)">$pageNum</a></li>
+										#end
+									#end
+									<li><a href="#"  onclick="changePage($propertyListModel.currentPage + 1)">»</a></li>
+								</ul>
+							</div>
+							<!-- end of PAGER -->
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	#end

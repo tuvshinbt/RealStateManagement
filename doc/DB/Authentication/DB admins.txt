@@ -1,0 +1,4 @@
+DB root: root
+Password: projext
+
+DB Schema: ohrt
