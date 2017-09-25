@@ -16,8 +16,8 @@
 			<div class="row register">
 				<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
 					<c:if test="${not empty msg}">
-						<div>
-							<span>${msg}</span>
+						<div class="alert alert-danger alert-dismissable">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>${msg}
 						</div>
 					</c:if>
 					<form method="POST" action="login">
