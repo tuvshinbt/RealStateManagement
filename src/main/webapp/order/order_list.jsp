@@ -42,15 +42,37 @@
 										<td>${order.getProperty().getAddress()}</td>
 										<td>${order.getProperty().getPurposeKey()}</td>
 										<td>${order.getSeller().getFirstName()} - ${order.getSeller().getLastName()}</td>
-										<td>#if($order.status == 1) PENDING #elseif($order.status
-											== 2) <b>APPROVED</b> #elseif($order.status == 3) BOUGHT
-											#elseif($order.status == 4) RENTED #elseif($order.status ==
-											5) CANCELLED #else DELETED #end
+										<td>
+											<c:choose>
+												<c:when test="${order.getStatus() == 1}">
+													PENDING
+												</c:when>
+												<c:when test="${order.getStatus() == 2}">
+													<b>APPROVED</b>
+												</c:when>
+												<c:when test="${order.getStatus() == 3}">
+													BOUGHT
+												</c:when>
+												<c:when test="${order.getStatus() == 4}">
+													RENTED
+												</c:when>
+												<c:when test="${order.getStatus() == 4}">
+													CANCELLED
+												</c:when>
+												<c:otherwise>
+													DELETED
+												</c:otherwise>
+											</c:choose>
 										</td>
-										<td><a href="/order/$order.id">View</a></td>
-										<td>#if($currentUser) #if($currentUser.Role == 2)
-											#if($order.status == 1) <a href="/order/approve/$order.id">Approve</a>
-											#end #end #end
+										<td><a href="${ContextPath}/order?orderId=${order.getId()}">View</a></td>
+										<td>
+											<c:if test="${not empty currentUser}">
+												<c:if test="${currentUser.Role == 2}">
+													<c:if test="${order.getStatus() == 1}">
+														<a href="${ContextPath}/order/approve?orderId=${order.getId()}">Approve</a>
+													</c:if>
+												</c:if>
+											</c:if>
 										</td>
 									</tr>
 								</c:forEach>

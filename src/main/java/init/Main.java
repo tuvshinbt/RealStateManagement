@@ -48,8 +48,8 @@ public class Main {
 		});
 
 		path("/order", () -> {
-			get("/list", OrderController.getOrderListPage);
-			get("/register/:propertyId/:type", OrderController.getOrderRegisterPage);
+			//get("/list", OrderController.getOrderListPage);
+			//get("/register/:propertyId/:type", OrderController.getOrderRegisterPage);
 			post("/register", OrderController.postOrderRegisterPage);
 			get("/approve/:orderId", OrderController.getApproveOrderPage);
 			get("/cancel/:orderId", OrderController.getCancelOrderPage);
