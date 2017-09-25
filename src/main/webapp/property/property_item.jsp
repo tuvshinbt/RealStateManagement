@@ -263,7 +263,7 @@
 												<input type="datetime-local" class="form-control"
 													placeholder="Appointment Date Time" name="appointment_date"
 													required="required" /> <input type="hidden"
-													name="property_id" value=$propertyModel.getProperty().id />
+													name="property_id" value="${property.getId()}" />
 												<textarea rows="6" class="form-control"
 													placeholder="What do you want to tell about appointment?"
 													name="appointment_info" required="required"></textarea>
@@ -271,7 +271,7 @@
 													appointment</button>
 											</form>
 											<br /> <a
-												href="/order/register/$propertyModel.property.id/$propertyModel.property.purposeKey"
+												href="${ContextPath}/order/register?propertyId=${property.getId()}&orderType=${property.getPurposeKey()}"
 												class="btn btn-primary">Create order</a>
 										</div>
 										<!-- enquiry -->
