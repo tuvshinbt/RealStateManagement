@@ -92,29 +92,29 @@
 				<!-- Nav Starts -->
 				<div class="navbar-collapse  collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="">Home</a></li>
+						<li class="active"><a href="index">Home</a></li>
 						<!--<li><a href="about.php">About</a></li>-->
 						<li><a href="agents">Agents</a></li>
 						<!--<li><a href="blog.php">Blog</a></li>-->
 						<c:choose>
 							<c:when test="${currentUser != null}">
 								<li><a> <c:choose>
-											<c:when test="${currentUser.Role == 1}">
+											<c:when test="${currentUser.role == 1}">
 												BUYER
 											</c:when>
-											<c:when test="${currentUser.Role ==2}">
+											<c:when test="${currentUser.role ==2}">
 												SELLER
 											</c:when>
-											<c:when test="${currentUser.Role ==3}">
+											<c:when test="${currentUser.role ==3}">
 												AGENT
 											</c:when>
 											<c:otherwise>
 												ADMIN
 											</c:otherwise>
 										</c:choose></a></li>
-								<li><a><span>${currentUser.FirstName}</span><span>${currentUser.LastName}</span></a></li>
+								<li><a><span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
 								<li>
-									<form method="post" action="logout">
+									<form method="get" action="logout">
 										<button id="logout">Log Out</button>
 									</form>
 								</li>
@@ -136,14 +136,14 @@
 	<div class="container">
 		<!-- Header Starts -->
 		<div class="header">
-			<a href=""><img src="public/images/logo.png" alt="Realestate"></a>
+			<a href="index"><img src="public/images/logo.png" alt="Realestate"></a>
 			<ul class="pull-right">
 				<c:if test="${not empty currentUser}">
 					<c:choose>
-						<c:when test="${currentUser.Role == 4}">
+						<c:when test="${currentUser.role == 4}">
 							<li><a href="property/requests">Pending requests</a></li>
 						</c:when>
-						<c:when test="${currentUser.Role == 2}">
+						<c:when test="${currentUser.role == 2}">
 							<li><a href="property/upload">Upload property</a></li>
 						</c:when>
 						<c:otherwise>
@@ -169,7 +169,7 @@
 					<ul class="row">
 						<c:if test="${not empty currentUser}">
 							<c:choose>
-								<c:when test="${currentUser.Role == 4}">
+								<c:when test="${currentUser.role == 4}">
 									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="property/requests">Pending requests</a></li>
 								</c:when>
 								<c:otherwise>
@@ -210,7 +210,7 @@
 				<div class="row">
 					<div class="col-sm-6 login">
 						<h4>Login</h4>
-						<form class="" role="form" action="/login" method="POST">
+						<form class="" role="form" action="login" method="POST">
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label> <input type="email" class="form-control"
 									id="email" name="email" placeholder="Enter email" required="required">
