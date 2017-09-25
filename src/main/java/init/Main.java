@@ -43,8 +43,8 @@ public class Main {
 			get("/bookAppt/approve/:id", BookAppointmentController.approveBookApptPost);
 			get("/requests", RequestsPropertiesController.initRequestsPage);
 			get("/approve/:id", RequestsPropertiesController.approvePropertyPost);
-			get("/:id", PropertyController.getItemPage);
-			post("/:id", PropertyController.postItemPageFeedback);
+			//get("/:id", PropertyController.getItemPage);
+			//post("/:id", PropertyController.postItemPageFeedback);
 		});
 
 		path("/order", () -> {
