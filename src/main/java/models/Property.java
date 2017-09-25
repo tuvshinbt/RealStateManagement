@@ -57,7 +57,7 @@ public abstract class Property {
 		this.kitchen = kitchen;
 		this.purposeKey = purposeKey;
 	}
-	
+
 	public String getMainPicturePath() {
 		return mainPicturePath;
 	}
@@ -241,16 +241,13 @@ public abstract class Property {
 		String queryString = "UPDATE property SET StatusID = 2, ApprovedBy = :approvedBy, ApprovedDate = SYSDATE()"
 				+ " WHERE ID = :id";
 		try {
-            Connection conn = Sql2Object.open();
-            conn.createQuery(queryString)
-                    .addParameter("id", id)
-                    .addParameter("approvedBy", approvedBy)
-                    .executeUpdate();
-            
-            isApproved = true;
-        } catch ( Exception e ) {
-        	e.printStackTrace();
-        }
+			Connection conn = Sql2Object.open();
+			conn.createQuery(queryString).addParameter("id", id).addParameter("approvedBy", approvedBy).executeUpdate();
+
+			isApproved = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return isApproved;
 	}
 
@@ -264,34 +261,28 @@ public abstract class Property {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 			LocalDate localDate = LocalDate.now();
 
-			long property_id = (long)con.createQuery(queryString, true)
-					.addParameter("Name", property.getName())
-					.addParameter("Address", property.getAddress())
-					.addParameter("OwnerID", userId)
-					.addParameter("Bedroom", property.getBedroom())
-					.addParameter("Bathroom", property.getBathroom())
-					.addParameter("StatusID", property.getStatus().getId())
-					.addParameter("ApprovedBy", 0)
+			long property_id = (long) con.createQuery(queryString, true).addParameter("Name", property.getName())
+					.addParameter("Address", property.getAddress()).addParameter("OwnerID", userId)
+					.addParameter("Bedroom", property.getBedroom()).addParameter("Bathroom", property.getBathroom())
+					.addParameter("StatusID", property.getStatus().getId()).addParameter("ApprovedBy", 0)
 					.addParameter("RegisterDate", dtf.format(localDate))
-					.addParameter("AgentAccount", property.getAgentAccount().getId())
+					.addParameter("AgentAccount",
+							property.getAgentAccount() != null ? property.getAgentAccount().getId() : null)
 					.addParameter("UtilitiesCost", property.getUtilitiesCost())
 					.addParameter("PurposeKey", property.getPurposeKey())
 					.addParameter("PurposeID", property.getPurposeType().getId())
-					.addParameter("Parking", property.getParking())
-					.addParameter("Livingroom", property.getLivingroom())
+					.addParameter("Parking", property.getParking()).addParameter("Livingroom", property.getLivingroom())
 					.addParameter("Kitchen", property.getKitchen())
-					.addParameter("Description", property.getDescription())
-					.executeUpdate()
-					.getKey();
-			
-			property.setId((int)property_id);
+					.addParameter("Description", property.getDescription()).executeUpdate().getKey();
+
+			property.setId((int) property_id);
 			return property.getId();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;	
+		return 0;
 	}
-	
+
 	public void addImage(PropertyImage image) {
 		this.images.add(image);
 	}

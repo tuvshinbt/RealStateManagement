@@ -6,7 +6,7 @@
 
 	<div class="inside-banner">
 		<div class="container">
-			<span class="pull-right"><a href="index">Home</a> / <a href="register">Register</a></span>
+			<span class="pull-right"><a href="${ContextPath}/index">Home</a> / <a href="register">Register</a></span>
 			<h2>Register</h2>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>${msg}
 						</div>
 					</c:if>
-					<form method="POST" action="login">
+					<form method="POST" action="${ContextPath}/login">
 						<div class="form-group">
 							<input type="email" class="form-control" placeholder="Enter Email" name="email" required="required">
 						</div>

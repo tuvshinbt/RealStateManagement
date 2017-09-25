@@ -15,7 +15,7 @@
 		<div class="spacer">
 			<div class="row">
 				<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
-					<form action="/property/upload" method="POST" enctype="multipart/form-data">
+					<form action="property_upload" method="POST" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-lg-6">
 								<label for="name">Property title</label> <input type="text" class="form-control" placeholder="Property title"
@@ -77,8 +77,11 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<label for="agents">Agents</label> <select class="form-control" placeholder="Agent" name="agentaccount"
-									onchange="setupPurpose()" id="agents" required="required"> #foreach($agent in $agents)
-									<option value="$agent.getId()">$agent.getFirstName() $agent.getLastName()</option> #end
+									onchange="setupPurpose()" id="agents" required="required">
+									<option value="0"></option>
+									<c:forEach var="agent" items="${agents}">
+										<option value="${agent.id}">${agent.firstName}${agent.lastName}</option>
+									</c:forEach>
 								</select>
 							</div>
 							<div class="col-lg-6">
@@ -89,23 +92,23 @@
 
 						<div class="row" id="sellFields">
 							<div class="col-lg-6">
-								<input type="number" min="0" class="form-control" value="0" placeholder="Sell price" name="sellPrice"
-									required="required">
+								<label for="ucost">Sell price</label> <input type="number" min="0" class="form-control" value="0"
+									placeholder="Sell price" name="sellPrice" required="required">
 							</div>
 						</div>
 
 						<div class="row" id="rentFields">
 							<div class="col-lg-6">
-								<input type="number" min="0" class="form-control" value="0" placeholder="Monthly price" name="monthlyPrice"
-									required="required">
+								<label for="ucost">Monthly price</label> <input type="number" min="0" class="form-control" value="0"
+									placeholder="Monthly price" name="monthlyPrice" required="required">
 							</div>
 							<div class="col-lg-6">
-								<input type="number" min="0" class="form-control" value="0" placeholder="Total month" name="totalMonth"
-									required="required">
+								<label for="ucost">Total month</label> <input type="number" min="0" class="form-control" value="0"
+									placeholder="Total month" name="totalMonth" required="required">
 							</div>
 							<div class="col-lg-6">
-								<input type="number" min="0" class="form-control" value="0" placeholder="Deposit" name="deposit"
-									required="required">
+								<label for="ucost">Deposit</label> <input type="number" min="0" class="form-control" value="0"
+									placeholder="Deposit" name="deposit" required="required">
 							</div>
 						</div>
 

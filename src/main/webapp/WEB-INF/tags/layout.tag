@@ -139,7 +139,7 @@
 							<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
 						</c:when>
 						<c:when test="${currentUser.role == 2}">
-							<li><a href="${ContextPath}/property/upload">Upload property</a></li>
+							<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
 						</c:when>
 						<c:otherwise>
 						</c:otherwise>
