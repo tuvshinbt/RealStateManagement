@@ -146,7 +146,7 @@
 	<!-- banner -->
 	<div class="container">
 		<div class="properties-listing spacer">
-			<a href="property/list" class="pull-right viewall">View All Listing</a>
+			<a href="PropertListGetItemPage" class="pull-right viewall">View All Listing</a>
 			<h2>Featured Properties</h2>
 			<div id="owl-example" class="owl-carousel">
 
