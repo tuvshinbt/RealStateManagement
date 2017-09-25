@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <t:layout>
 	<div class="">
 		<div id="slider" class="sl-slider-wrapper">
@@ -93,9 +94,8 @@
 			</div>
 			<!-- /sl-slider -->
 			<nav id="nav-dots" class="nav-dots">
-				<span class="nav-dot-current"></span> <span></span> <span></span> <span></span> <span></span>
+				<span class="nav-dot-current"></span>
 			</nav>
-
 		</div>
 		<!-- /slider-wrapper -->
 	</div>
@@ -119,17 +119,6 @@
 										<option value="2">Sell</option>
 									</select>
 								</div>
-								<!--
-							<div class="col-lg-3 col-sm-4">
-								<select class="form-control">
-									<option>Price</option>
-									<option>$150,000 - $200,000</option>
-									<option>$200,000 - $250,000</option>
-									<option>$250,000 - $300,000</option>
-									<option>$300,000 - above</option>
-								</select>
-							</div>
-							-->
 								<div class="col-lg-4 col-sm-5">
 									<select name="searchPropertyTypeId" class="form-control">
 										<option value="0">-- Property type --</option>
@@ -144,12 +133,12 @@
 							<input type="hidden" name="order" value="0"> <input type="hidden" name="currentPage" value="1">
 						</form>
 					</div>
-					#if(!$currentUser)
-					<div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
-						<p>Join now and get updated with all the properties deals.</p>
-						<button class="btn btn-info" data-toggle="modal" data-target="#loginpop">Login</button>
-					</div>
-					#end
+					<c:if test="${empty currentUser}">
+						<div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
+							<p>Join now and get updated with all the properties deals.</p>
+							<button class="btn btn-info" data-toggle="modal" data-target="#loginpop">Login</button>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -157,7 +146,7 @@
 	<!-- banner -->
 	<div class="container">
 		<div class="properties-listing spacer">
-			<a href="/property/list" class="pull-right viewall">View All Listing</a>
+			<a href="property/list" class="pull-right viewall">View All Listing</a>
 			<h2>Featured Properties</h2>
 			<div id="owl-example" class="owl-carousel">
 
@@ -169,30 +158,32 @@
 							<c:choose>
 								<c:when test="${property.purposeKey == 'Sell'}">
 									<div class="status sold">
-										<b>${property.name}</b> - <i>${property.purposeKey}</i>
+										<b>${property.getClass().simpleName}</b> - <i>${property.purposeKey}</i>
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="status new">
-										<b>${property.name}</b> - <i>${property.purposeKey}</i>
-<%-- 										${property.class.simpleName} --%>
+										<b>${property.getClass().simpleName}</b> - <i>${property.purposeKey}</i>
 									</div>
 								</c:otherwise>
 							</c:choose>
 						</div>
 						<h4>
-							<a href="/property/${property.id}">${property.name}</a>
+							<a href="property/${property.id}">${property.name}</a>
 						</h4>
-						<p class="price">Price: $$numberTool.format("###,###,##0", $property.purposeType.calculatePrice())</p>
+						<p class="price">
+							Price:
+							<fmt:setLocale value="en_US" />
+							<fmt:formatNumber value="${property.purposeType.calculatePrice()}" type="currency" />
+						</p>
 						<div class="listing-detail">
-							<span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">$property.bedroom</span> <span
-								data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">$property.livingroom</span> <span
-								data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">$property.parking</span> <span
-								data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">$property.kitchen</span>
+							<span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">${property.bedroom}</span> <span
+								data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">${property.livingroom}</span> <span
+								data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">${property.parking}</span> <span
+								data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">${property.kitchen}</span>
 						</div>
-						<a class="btn btn-primary" href="/property/$property.id">View Details</a>
+						<a class="btn btn-primary" href="property/${property.id}">View Details</a>
 					</div>
-					<!-- properties -->
 				</c:forEach>
 			</div>
 		</div>
@@ -226,55 +217,55 @@
 									</div>
 									<div class="col-lg-8">
 										<h5>
-											<a href="/property/1">Integer sed porta quam</a>
+											<a href="property/1">Integer sed porta quam</a>
 										</h5>
 										<p class="price">$300,000</p>
-										<a href="/property/1" class="more">More Detail</a>
+										<a href="property/1" class="more">More Detail</a>
 									</div>
 								</div>
 							</div>
-							<div class="item">
-								<div class="row">
-									<div class="col-lg-4">
-										<img src="public/images/properties/2.jpg" class="img-responsive" alt="properties" />
-									</div>
-									<div class="col-lg-8">
-										<h5>
-											<a href="/property/1">Integer sed porta quam</a>
-										</h5>
-										<p class="price">$300,000</p>
-										<a href="/property/1" class="more">More Detail</a>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="row">
-									<div class="col-lg-4">
-										<img src="public/images/properties/3.jpg" class="img-responsive" alt="properties" />
-									</div>
-									<div class="col-lg-8">
-										<h5>
-											<a href="/property/1">Integer sed porta quam</a>
-										</h5>
-										<p class="price">$300,000</p>
-										<a href="/property/1" class="more">More Detail</a>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="row">
-									<div class="col-lg-4">
-										<img src="public/images/properties/4.jpg" class="img-responsive" alt="properties" />
-									</div>
-									<div class="col-lg-8">
-										<h5>
-											<a href="/property/1">Integer sed porta quam</a>
-										</h5>
-										<p class="price">$300,000</p>
-										<a href="/property/1" class="more">More Detail</a>
-									</div>
-								</div>
-							</div>
+<!-- 							<div class="item"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-lg-4"> -->
+<!-- 										<img src="public/images/properties/2.jpg" class="img-responsive" alt="properties" /> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-8"> -->
+<!-- 										<h5> -->
+<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+<!-- 										</h5> -->
+<!-- 										<p class="price">$300,000</p> -->
+<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="item"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-lg-4"> -->
+<!-- 										<img src="public/images/properties/3.jpg" class="img-responsive" alt="properties" /> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-8"> -->
+<!-- 										<h5> -->
+<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+<!-- 										</h5> -->
+<!-- 										<p class="price">$300,000</p> -->
+<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="item"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-lg-4"> -->
+<!-- 										<img src="public/images/properties/4.jpg" class="img-responsive" alt="properties" /> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-8"> -->
+<!-- 										<h5> -->
+<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+<!-- 										</h5> -->
+<!-- 										<p class="price">$300,000</p> -->
+<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

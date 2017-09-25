@@ -1,0 +1,48 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="inside-banner">
+	<div class="container"> 
+		<span class="pull-right"><a href="/">Home</a> / Requested properties</span>
+		<h2>Requested properties</h2>
+	</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+	<div class="spacer">
+		<div class="row register">
+			<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+			
+				<div class="table-responsive">
+	  				<table class="table table-hover">
+		  				<tr class="active">
+		  					<th>Property Name</th>
+		  					<th>Address</th>
+		  					<th>Price</th>
+		  					<th>Owner</th>
+		  					<th>Purpose</th>
+		  					<th></th>
+		  					<th></th>
+		  				</tr>
+						#foreach( $hotProperty in $properties )
+							<tr class="active">
+								<td>$hotProperty.name</td>
+								<td>$hotProperty.address</td>
+								<td>$hotProperty.utilitiesCost</td>
+								<td>$hotProperty.getOwner().getFirstName()</td>
+								<td>$hotProperty.getPurposeKey()</td>
+								<td><a href="/property/$hotProperty.id">View</a></td>
+								<td><a href="/property/approve/$hotProperty.id">Approve</a></td>
+							</tr>
+						#end
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+#end

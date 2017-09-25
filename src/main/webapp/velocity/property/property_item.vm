@@ -1,0 +1,201 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="inside-banner">
+  <div class="container"> 
+    <span class="pull-right"><a href="/property/list">View All Listing</a> / Back</span>
+    <h2>Buy</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+    <div class="properties-listing spacer">
+
+        <div class="row">
+            <div class="col-lg-3 col-sm-4 hidden-xs">
+
+                  <!-- start of MOST VIEWED PROPERTY -->
+                  <div class="hot-properties hidden-xs">
+                    <h4>Hot Properties</h4>
+                      #foreach( $hotProperty in $propertyModel.hotPropertyList )
+                        <div class="row">
+                          <div class="col-lg-4 col-sm-5"><img src="/uploads/$hotProperty.mainPicturePath" class="img-responsive img-circle" alt="properties"></div>
+                          <div class="col-lg-8 col-sm-7">
+                            <h5><a href="/property/$hotProperty.id">$hotProperty.name</a></h5>
+                            <p class="price">$$numberTool.format("###,###,##0", $hotProperty.purposeType.calculatePrice())</p> 
+                          </div>
+                        </div>
+                        #end
+                  </div>
+                  <!-- end of MOST VIEWED PROPERTY -->
+
+
+
+                  <div class="advertisement">
+                      <h4>Advertisements</h4>
+                      <img src="/images/advertisements.jpg" class="img-responsive" alt="advertisement">
+                  </div>
+
+              </div>
+
+              <div class="col-lg-9 col-sm-8 ">
+
+                #if (!$propertyModel.property)
+                <h1 style="color: black;">Not found item!</h1>
+                #else
+
+                <h2>$propertyModel.property.name<span class="title-status"> - $propertyModel.property.status.name</span></h2>
+                <div class="row">
+                  <div class="col-lg-8">
+                      <div class="property-/images">
+                        <!-- Slider Starts -->
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                          <!-- Indicators -->
+                          <ol class="carousel-indicators hidden-xs">
+                            #set($pagerStart = 1)
+                            #set($range = [$pagerStart..$propertyModel.property.picturePathList.size()])
+                            #foreach($pageNum in $range)
+                              #if ($pageNum == 1)
+                                <li data-target="#myCarousel" data-slide-to="$pageNum" class="active"></li>
+                              #else
+                                <li data-target="#myCarousel" data-slide-to="$pageNum" class=""></li>
+                              #end
+                            #end
+                        </ol>
+                        <div class="carousel-inner">
+
+                          #set ($firstPic = true)
+                          #foreach( $picturePath in $propertyModel.property.picturePathList )
+                            <!-- Item -->
+                            #if ($firstPic == true)
+                              <div class="item active">
+                                <img src="/uploads/$picturePath" class="properties" alt="properties" />
+                              </div>
+                              #set ($firstPic = false)
+                            #else
+                              <div class="item">
+                                <img src="/uploads/$picturePath" class="properties" alt="properties" />
+                              </div>
+                            #end
+                            <!-- #Item -->
+                          #end
+                      </div>
+                      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                  </div>
+                  <!-- #Slider Ends -->
+
+              </div>
+
+              <div class="spacer"><h4><span class="glyphicon glyphicon-th-list"></span> Description</h4>
+                  <p>$propertyModel.property.description</p>
+
+              </div>
+              <!--
+              <div><h4><span class="glyphicon glyphicon-map-marker"></span> Location</h4>
+                <div class="well"><iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="$propertyModel.property.googleMapPath"></iframe></div>
+            </div>
+            -->
+
+            <!-- start of FEEDBACK -->
+            <div><h4><span class="glyphicon glyphicon-comment"></span> Feedback</h4>
+
+              #foreach( $propertyFeedback in $propertyModel.propertyFeedbackList )
+                <div class="panel panel-default feedback">
+                  <div class="panel-heading feedback_header">
+                  #if ($propertyFeedback.account.role == 1)
+                  (<b>Buyer</b>) -
+                  #elseif($propertyFeedback.account.role == 2)
+                  (<b>Seller</b>) - 
+                  #elseif($propertyFeedback.account.role == 3)
+                  (<b>Agent</b>) - 
+                  #elseif($propertyFeedback.account.role == 4)
+                  (<b>ADMIN</b>) - 
+                  #end
+                  $propertyFeedback.account.firstName  $propertyFeedback.account.lastName
+                  </div>
+                  <div class="panel-body feedback_content">
+                    $propertyFeedback.comment
+                    <div>Posted on : $dateTool.format("EEE, MMM d, yyyy - h:m a", $propertyFeedback.property.registerDate)</div>
+                  </div>
+                </div>
+              #end
+              <form class="" role="form" action="/property/$propertyModel.property.id" method="POST" id="feedbackId" name="feedback">
+                <div class="feedback">
+                  <input type="hidden" name="feedbackPropertyId" value="$propertyModel.property.id">
+                  <textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
+                  <button type="submit" class="btn btn-success" name="Submit">Send Message</button>
+                </div>
+              </form>
+            </div>
+             <!-- end of FEEDBACK -->
+
+
+        </div>
+        <div class="col-lg-4">
+          <div class="col-lg-12  col-sm-6">
+            <div class="property-info">
+                <p class="price"><b>${propertyModel.property.class.simpleName}</b> - <i>$propertyModel.property.purposeKey</i></p>
+                #if ($propertyModel.property.purposeKey == 'Sell')
+                  <p class="price"><span class="glyphicon glyphicon-home"></span> $$numberTool.format("###,###,##0", $propertyModel.property.purposeType.calculatePrice())</p>
+                #else
+                  <p class="price"><span class="glyphicon glyphicon-home"></span> $$numberTool.format("###,###,##0", $propertyModel.property.purposeType.calculatePrice())</p>
+                  <p class="area"><span class="glyphicon glyphicon-time"></span>$numberTool.format("##", $propertyModel.property.purposeType.rentMonth) month</p>
+                  <p class="area"><span class="glyphicon glyphicon-lock"></span>deposit - $$numberTool.format("###,###,##0", $propertyModel.property.purposeType.deposit)</p>
+                #end
+                
+                <p class="area"><span class="glyphicon glyphicon-usd"></span>Utilities - $numberTool.format("###,###,##0", $propertyModel.property.utilitiesCost)</p>
+                <p class="area"><span class="glyphicon glyphicon-map-marker"></span>$propertyModel.property.address</p>
+                #if($propertyModel.property.approvedDate)
+                <p class="area"><span class="glyphicon glyphicon-calendar"></span>Posted on: $dateTool.format("MMM d, yyyy - h:m a", $propertyModel.property.approvedDate)</p>
+                #end
+                <div class="profile">
+                  #if ($propertyModel.property.agentAccount)
+                    <span class="glyphicon glyphicon-user"></span>Owner Details
+                    <p>$propertyModel.property.owner.firstName $propertyModel.property.owner.lastName</p>
+                    <span class="glyphicon glyphicon-briefcase"></span>Agent Details
+                    <p>$propertyModel.property.agentAccount.firstName $propertyModel.property.agentAccount.lastName<br>$propertyModel.property.agentAccount.mobile</p>
+                  #else
+                    <span class="glyphicon glyphicon-user"></span>Owner Details
+                    <p>$propertyModel.property.owner.firstName $propertyModel.property.owner.lastName<br>$propertyModel.property.owner.mobile</p>
+                  #end
+              </div>
+          </div>
+
+          <h6><span class="glyphicon glyphicon-home"></span> ${propertyModel.property.class.simpleName}</h6>
+          <div class="listing-detail">
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">$propertyModel.property.bedroom</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">$propertyModel.property.livingroom</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">$propertyModel.property.parking</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">$propertyModel.property.kitchen</span>
+          </div>
+          <div class="listing-detail">
+            #if(${propertyModel.property.class.simpleName} == 'House')
+              <span id="listing-detail-add" data-toggle="tooltip" data-placement="bottom" data-original-title="Yard">$numberTool.format("0", $propertyModel.property.yard)</span>
+            #else
+              <span id="listing-detail-add" data-toggle="tooltip" data-placement="bottom" data-original-title="Floor">$propertyModel.property.floor</span>
+            #end
+          </div>
+
+        </div>
+        <div class="col-lg-12 col-sm-6 ">
+            <div class="enquiry">
+              <h6><span class="glyphicon glyphicon-envelope"></span> Send request </h6>
+              <form role="form" action="/property/bookAppt/request" method="POST">
+                <input type="datetime-local" class="form-control" placeholder="Appointment Date Time" name="appointment_date" required="required" />
+                <input type="hidden" name="property_id" value=$propertyModel.getProperty().id />
+                <textarea rows="6" class="form-control" placeholder="What do you want to tell about appointment?" name="appointment_info" required="required"></textarea>
+                <button type="submit" class="btn btn-primary" name="Submit">Request appointment</button>
+            </form>
+            <br/>
+            <a href="/order/register/$propertyModel.property.id/$propertyModel.property.purposeKey"  class="btn btn-primary">Create order</a>
+        </div>       
+    </div>
+</div>
+#end
+</div>
+</div>
+</div>
+</div>
+</div>
+
+#end

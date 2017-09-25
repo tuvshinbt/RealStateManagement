@@ -1,0 +1,46 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="inside-banner">
+	<div class="container"> 
+		<span class="pull-right"><a href="/">Home</a> / Requested properties</span>
+		<h2>Requested properties</h2>
+	</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+	<div class="spacer">
+		<div class="row register">
+			<div class="col-lg-12 col-sm-12 col-xs-12 ">
+			
+				<div class="table-responsive">
+	  				<table class="table table-hover">
+		  				<tr class="active">
+		  					<th>Property Name</th>
+		  					<th>Property Address</th>
+		  					<th>From Who</th>
+		  					<th>Appointment</th>
+		  					<th>Date</th>
+		  					<th></th>
+		  				</tr>
+						#foreach( $appointment in $appointments )
+							<tr class="active">
+								<td><a href="/property/$appointment.getProperty().id">$appointment.property.name</a></td>
+								<td>$appointment.property.address</td>
+								<td>$appointment.buyer.firstName</td>
+								<td>$appointment.appointmentComment</td>
+								<td>$appointment.appointmentDate</td>
+								<td><a href="/property/bookAppt/approve/$appointment.id">Approve</a></td>
+							</tr>
+						#end
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+#end

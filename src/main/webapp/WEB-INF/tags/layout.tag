@@ -1,5 +1,6 @@
 <%@tag description="Simple layout Tag" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,20 +92,37 @@
 				<!-- Nav Starts -->
 				<div class="navbar-collapse  collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="/">Home</a></li>
+						<li class="active"><a href="">Home</a></li>
 						<!--<li><a href="about.php">About</a></li>-->
-						<li><a href="/agents">Agents</a></li>
+						<li><a href="agents">Agents</a></li>
 						<!--<li><a href="blog.php">Blog</a></li>-->
-						#if($currentUser)
-						<li><a>( #if($currentUser.Role == 1) BUYER #elseif($currentUser.Role ==2) SELLER
-								#elseif($currentUser.Role ==2) AGENT #else ADMIN #end )</a></li>
-						<li><a>$currentUser.FirstName </span><span>$currentUser.LastName</span></a></li>
-						<li>
-							<form method="post" action="/logout">
-								<button id="logout">Log Out</button>
-							</form>
-						</li> #else
-						<li><a href="/login">Log In</a></li> #end
+						<c:choose>
+							<c:when test="${currentUser != null}">
+								<li><a> <c:choose>
+											<c:when test="${currentUser.Role == 1}">
+												BUYER
+											</c:when>
+											<c:when test="${currentUser.Role ==2}">
+												SELLER
+											</c:when>
+											<c:when test="${currentUser.Role ==3}">
+												AGENT
+											</c:when>
+											<c:otherwise>
+												ADMIN
+											</c:otherwise>
+										</c:choose></a></li>
+								<li><a><span>${currentUser.FirstName}</span><span>${currentUser.LastName}</span></a></li>
+								<li>
+									<form method="post" action="logout">
+										<button id="logout">Log Out</button>
+									</form>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="login">Log In</a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 				<!-- #Nav Ends -->
@@ -115,22 +133,25 @@
 	</div>
 	<!-- #Header Starts -->
 
-
-
-
-
 	<div class="container">
-
 		<!-- Header Starts -->
 		<div class="header">
-			<a href="/"><img src="public/images/logo.png" alt="Realestate"></a>
-
+			<a href=""><img src="public/images/logo.png" alt="Realestate"></a>
 			<ul class="pull-right">
-				#if($currentUser) #if($currentUser.Role == 4)
-				<li><a href="/property/requests"">Pending requests</a></li> #elseif($currentUser.Role == 2)
-				<li><a href="/property/upload"">Upload property</a></li> #end
-				<li><a href="/property/bookAppt/requests">Appointments</a></li>
-				<li><a href="/order/list"">Orders</a></li> #end
+				<c:if test="${not empty currentUser}">
+					<c:choose>
+						<c:when test="${currentUser.Role == 4}">
+							<li><a href="property/requests">Pending requests</a></li>
+						</c:when>
+						<c:when test="${currentUser.Role == 2}">
+							<li><a href="property/upload">Upload property</a></li>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+					<li><a href="property/bookAppt/requests">Appointments</a></li>
+					<li><a href="order/list">Orders</a></li>
+				</c:if>
 				<li><a href="#" onclick="submitForm(2)">Sell</a></li>
 				<li><a href="#" onclick="submitForm(1)">Rent</a></li>
 			</ul>
@@ -141,24 +162,23 @@
 	<jsp:doBody />
 
 	<div class="footer">
-
 		<div class="container">
-
-
-
 			<div class="row">
 				<div class="col-lg-4 col-sm4">
 					<h4>Information</h4>
 					<ul class="row">
-						<!--<li class="col-lg-12 col-sm-12 col-xs-3"><a href="about.php">About</a></li>-->
-						#if($currentUser) #if($currentUser.Role == 4)
-						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="/property/requests">Pending requests</a></li> #end
-						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="/property/bookAppt/requests">Appointments</a></li>
-						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="/order/list">Orders</a></li> #end
-						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="/agents">Agents</a></li>
-
-						<!--<li class="col-lg-12 col-sm-12 col-xs-3"><a href="blog.php">Blog</a></li>-->
-						<!--<li class="col-lg-12 col-sm-12 col-xs-3"><a href="contact.php">Contact</a></li>-->
+						<c:if test="${not empty currentUser}">
+							<c:choose>
+								<c:when test="${currentUser.Role == 4}">
+									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="property/requests">Pending requests</a></li>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="property/bookAppt/requests">Appointments</a></li>
+							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="order/list">Orders</a></li>
+						</c:if>
+						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="agents">Agents</a></li>
 					</ul>
 				</div>
 
@@ -175,7 +195,7 @@
 					<h4>Contact us</h4>
 					<p>
 						<b>Group #3.</b><br> <span class="glyphicon glyphicon-map-marker"></span> 1000 N 4th St, IA, USA, 52557 <br>
-						<span class="glyphicon glyphicon-envelope"></span> ganbaatar.gb@gmail.com<br> <span
+						<span class="glyphicon glyphicon-envelope"></span> bbadarch@mum.edu<br> <span
 							class="glyphicon glyphicon-earphone"></span> (111) 999-9999
 					</p>
 				</div>

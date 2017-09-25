@@ -1,0 +1,151 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="inside-banner">
+  <div class="container"> 
+    <span class="pull-right"><a href="/property/list">List</a> / Create order</span>
+    <h2>Create order</h2>
+  </div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+  <div class="spacer">
+    <div class="row">
+      #if($msg)
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          $msg
+        </div>
+      #end
+      #if($errorMsg)
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          $errorMsg
+        </div>
+      #end
+      <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+        #if(!$order)
+        <h1 style="color: black;">Not found item!</h1>
+        #else
+        <form method="POST" action="/order/approve">
+          <input type="hidden" name="orderId" value="$order.id">
+          <h2>Order information</h2>
+          <table class="table table-hover table-bordered ">
+            <tr>
+              <td>Created by</td>
+              <td>$order.account.firstName $order.account.lastName</td>
+            </tr>
+            <tr>
+              <td>Registered</td>
+              <td>$order.registerDate</td>
+            </tr>
+            <tr>
+              <td>Property</td>
+              <td>$order.property.name - <a href="/property/$order.property.id" target="_blank">View</a></td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>$statusName</td>
+            </tr>
+            <tr>
+              <td>Seller</td>
+              <td>$order.seller.firstName $order.seller.lastName</td>
+            </tr>
+            <tr>
+              <td>Comment</td>
+              <td>$order.Comment</td>
+            </tr>
+            #if($orderType == 'Buy')
+            <tr>
+              <td>Buy</td>
+              <td>$order.BuyPrice</td>
+            </tr>
+            #else
+            <tr>
+              <td>Rent months</td>
+              <td>$order.RentMonth</td>
+            </tr>
+            <tr>
+              <td>Rent price (per month)</td>
+              <td>$order.PerMonthPrice</td>
+            </tr>
+            <tr>
+              <td>Desposit</td>
+              <td>$order.Deposit</td>
+            </tr>
+            <tr>
+              <td>To extend</td>
+              <td>$order.Extendable</td>
+            </tr>
+            #end
+          </table>
+          #if($currentUser)
+            #if($currentUser.Role == 2)
+              #if($statusName == 'PENDING')
+              <div class="col-lg-3 col-sm-3 col-xs-12 ">
+                <a class="btn btn-success" href="/order/approve/$order.id">Approve</a>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-xs-12 ">
+                <a class="btn btn-danger" href="/order/cancel/$order.id">Cancel</a>
+              </div>
+              #end
+            #elseif($currentUser.Role == 1)
+              #if($statusName == 'APPROVED')
+              <div class="col-lg-3 col-sm-3 col-xs-12 ">
+                <button class="btn btn-success"   data-toggle="modal" data-target="#paymentpop">Payment</button> 
+              </div>
+              #end
+            #end
+          #end
+          <div class="col-lg-3 col-sm-3 col-xs-12 ">
+            <a class="btn btn-success" href="/order/list">Back</a>
+          </div>
+        </form>
+        #end
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+  <div id="paymentpop" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="row">
+          <div class="col-sm-12 login">
+              <h4>Invoice</h4>
+              <form class="" role="form" action="/order/payment" method="POST">
+                  <input type="hidden" name="orderId" value="$order.id">
+                  <table class="table">
+                    <tr>
+                      <td><label>Amount</label></td>
+                      <td><input name="amount" required="required" value="$order.calculatePrice()"></td>
+                    </tr>
+                    <tr>
+                      <td><label>Payment type</label></td>
+                      <td>
+                        <select name="paymentType" required="required">
+                          <option value="card">Card</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><label>Card type</label></td>
+                      <td>
+                        <select name="cardType" required="required">
+                          <option value="master">Master</option>
+                          <option value="visa">Visa</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                  <button type="submit" class="btn btn-success">Payment</button>
+              </form>          
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+#end
