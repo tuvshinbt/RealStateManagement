@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/RealStateManagement">
+<!-- 	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="50" maxIdle="30" maxWait="10000" -->
+<!-- 		name="jdbc/realStateMgmt" password="pass" type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/ohrt" username="root" /> -->
+
 	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="50" maxIdle="30" maxWait="10000"
-		name="jdbc/realStateMgmt" password="pass" type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/ohrt" username="root" />
+		name="jdbc/realStateMgmt" password="musifyy_dbpa$$" type="javax.sql.DataSource" url="jdbc:mysql://107.180.56.180:3306/wap_sep"
+		username="musifyy_dbuser" />
 </Context>

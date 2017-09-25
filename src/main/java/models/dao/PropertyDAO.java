@@ -14,7 +14,6 @@ import models.PropertyImage;
 import models.RentPurpose;
 import models.SellPurpose;
 import models.User;
-import utils.DBConnection;
 import utils.Sql2Object;
 
 public class PropertyDAO {
@@ -34,8 +33,6 @@ public class PropertyDAO {
 	public static List<Row> query(int id, String searchBy, int ownerId, int statusID, int agentAccount,
 			String purposeKey, int type, Integer order, Integer offSet, Integer limit) {
 		try (Connection conn = Sql2Object.open()) {
-			// try (java.sql.Connection conn =
-			// DBConnection.getInstance().getConnection()) {
 			String sqlQuery = "SELECT * FROM property";
 			boolean hasWhere = false;
 			if (id != 0) {
