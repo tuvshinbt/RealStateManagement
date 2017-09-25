@@ -23,6 +23,7 @@ public class MainServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		getServletContext().setAttribute("ContextPath", getServletContext().getContextPath());
 		super.init();
 	}
 

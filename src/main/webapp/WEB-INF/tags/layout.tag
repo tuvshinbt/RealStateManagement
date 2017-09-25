@@ -7,27 +7,27 @@
 <title>RealStateManagement</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="public/assets/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="public/assets/style.css" />
+<link rel="stylesheet" href="${ContextPath}/public/assets/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="${ContextPath}/public/assets/style.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="public/assets/bootstrap/js/bootstrap.js"></script>
-<script src="public/assets/script.js"></script>
+<script src="${ContextPath}/public/assets/bootstrap/js/bootstrap.js"></script>
+<script src="${ContextPath}/public/assets/script.js"></script>
 
 
 
 <!-- Owl stylesheet -->
-<link rel="stylesheet" href="public/assets/owl-carousel/owl.carousel.css">
-<link rel="stylesheet" href="public/assets/owl-carousel/owl.theme.css">
-<script src="public/assets/owl-carousel/owl.carousel.js"></script>
+<link rel="stylesheet" href="${ContextPath}/public/assets/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="${ContextPath}/public/assets/owl-carousel/owl.theme.css">
+<script src="${ContextPath}/public/assets/owl-carousel/owl.carousel.js"></script>
 <!-- Owl stylesheet -->
 
 
 <!-- slitslider -->
-<link rel="stylesheet" type="text/css" href="public/assets/slitslider/css/style.css" />
-<link rel="stylesheet" type="text/css" href="public/assets/slitslider/css/custom.css" />
-<script type="text/javascript" src="public/assets/slitslider/js/modernizr.custom.79639.js"></script>
-<script type="text/javascript" src="public/assets/slitslider/js/jquery.ba-cond.min.js"></script>
-<script type="text/javascript" src="public/assets/slitslider/js/jquery.slitslider.js"></script>
+<link rel="stylesheet" type="text/css" href="${ContextPath}/public/assets/slitslider/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${ContextPath}/public/assets/slitslider/css/custom.css" />
+<script type="text/javascript" src="${ContextPath}/public/assets/slitslider/js/modernizr.custom.79639.js"></script>
+<script type="text/javascript" src="${ContextPath}/public/assets/slitslider/js/jquery.ba-cond.min.js"></script>
+<script type="text/javascript" src="${ContextPath}/public/assets/slitslider/js/jquery.slitslider.js"></script>
 <!-- slitslider -->
 
 <script type="text/javascript">
@@ -80,22 +80,17 @@
 			<div class="container">
 				<div class="navbar-header">
 
-
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-
 				</div>
-
 
 				<!-- Nav Starts -->
 				<div class="navbar-collapse  collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="index">Home</a></li>
-						<!--<li><a href="about.php">About</a></li>-->
-						<li><a href="agents">Agents</a></li>
-						<!--<li><a href="blog.php">Blog</a></li>-->
+						<li class="active"><a href="${ContextPath}/index">Home</a></li>
+						<li><a href="${ContextPath}/agents">Agents</a></li>
 						<c:choose>
 							<c:when test="${currentUser != null}">
 								<li><a> <c:choose>
@@ -114,13 +109,13 @@
 										</c:choose></a></li>
 								<li><a><span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
 								<li>
-									<form method="get" action="logout">
+									<form method="get" action="${ContextPath}/logout">
 										<button id="logout">Log Out</button>
 									</form>
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="login">Log In</a></li>
+								<li><a href="${ContextPath}/login">Log In</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
@@ -136,21 +131,21 @@
 	<div class="container">
 		<!-- Header Starts -->
 		<div class="header">
-			<a href="index"><img src="public/images/logo.png" alt="Realestate"></a>
+			<a href="${ContextPath}/index"><img src="${ContextPath}/public/images/logo.png" alt="Realestate"></a>
 			<ul class="pull-right">
 				<c:if test="${not empty currentUser}">
 					<c:choose>
 						<c:when test="${currentUser.role == 4}">
-							<li><a href="property/requests">Pending requests</a></li>
+							<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
 						</c:when>
 						<c:when test="${currentUser.role == 2}">
-							<li><a href="property/upload">Upload property</a></li>
+							<li><a href="${ContextPath}/property/upload">Upload property</a></li>
 						</c:when>
 						<c:otherwise>
 						</c:otherwise>
 					</c:choose>
-					<li><a href="property/bookAppt/requests">Appointments</a></li>
-					<li><a href="order/list">Orders</a></li>
+					<li><a href="${ContextPath}/property/bookAppt/requests">Appointments</a></li>
+					<li><a href="${ContextPath}/order/list">Orders</a></li>
 				</c:if>
 				<li><a href="#" onclick="submitForm(2)">Sell</a></li>
 				<li><a href="#" onclick="submitForm(1)">Rent</a></li>
@@ -170,15 +165,15 @@
 						<c:if test="${not empty currentUser}">
 							<c:choose>
 								<c:when test="${currentUser.role == 4}">
-									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="property/requests">Pending requests</a></li>
+									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/property/requests">Pending requests</a></li>
 								</c:when>
 								<c:otherwise>
 								</c:otherwise>
 							</c:choose>
-							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="property/bookAppt/requests">Appointments</a></li>
-							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="order/list">Orders</a></li>
+							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/property/bookAppt/requests">Appointments</a></li>
+							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/order/list">Orders</a></li>
 						</c:if>
-						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="agents">Agents</a></li>
+						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/agents">Agents</a></li>
 					</ul>
 				</div>
 
