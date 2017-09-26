@@ -25,19 +25,19 @@ public class Main {
 
 		// routes
 //		get("/", MainController.initHome);
-		get("/login", LoginController.initLoginPage);
+		//get("/login", LoginController.initLoginPage);
 		get("/register", LoginController.initRegisterPage);
-		get("/agents", AgentController.initAgentListPage);
+		//get("/agents", AgentController.initAgentListPage);
 
 		post(Path.Web.LOGIN, LoginController.handleLoginPost);
-		post("/logout", LoginController.handleLogoutPost);
+		//post("/logout", LoginController.handleLogoutPost);
 		post(Path.Web.REGISTER, LoginController.handleRegisterPost);
 
 		path("/property", () -> {
-			post("/upload", PropertyController.submitPropertyPost);
-			get("/upload", PropertyController.initUploadPage);
-			get("/list", PropertyController.getItemListPage);
-			post("/list", PropertyController.postItemListPage);
+			//post("/upload", PropertyController.submitPropertyPost);
+			//get("/upload", PropertyController.initUploadPage);
+			//get("/list", PropertyController.getItemListPage);
+			//post("/list", PropertyController.postItemListPage);
 			post("/bookAppt/request", BookAppointmentController.requestBookApptPost);
 			get("/bookAppt/requests", BookAppointmentController.initBookApptsRequestsPage);
 			get("/bookAppt/approve/:id", BookAppointmentController.approveBookApptPost);
@@ -50,11 +50,11 @@ public class Main {
 		path("/order", () -> {
 			//get("/list", OrderController.getOrderListPage);
 			//get("/register/:propertyId/:type", OrderController.getOrderRegisterPage);
-			post("/register", OrderController.postOrderRegisterPage);
+			//post("/register", OrderController.postOrderRegisterPage);
 			get("/approve/:orderId", OrderController.getApproveOrderPage);
 			get("/cancel/:orderId", OrderController.getCancelOrderPage);
 			post("/payment", OrderController.postPaymentOrderPage);
-			get("/:orderId", OrderController.getOrderPage);
+			//get("/:orderId", OrderController.getOrderPage);
 		});
 	}
 }

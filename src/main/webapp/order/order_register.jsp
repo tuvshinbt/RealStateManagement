@@ -6,7 +6,7 @@
 <t:layout>
 	<div class="inside-banner">
 		<div class="container">
-			<span class="pull-right"><a href="/">Home</a> / orders</span>
+			<span class="pull-right"><a href="${ContextPath}">Home</a> / orders</span>
 			<h2>List of orders</h2>
 		</div>
 	</div>
