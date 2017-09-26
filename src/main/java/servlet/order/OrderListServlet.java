@@ -44,6 +44,7 @@ public class OrderListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		User loggedUser = RequestUtil.getSessionCurrentUser(req);
 		if (loggedUser != null) {
+			req.setAttribute("mainMenu", "Orders");
 			int accountId = 0, sellerId = 0;
 			if (loggedUser.getRole() == OHRT.ROLE.BUYER) {
 				accountId = loggedUser.getId();

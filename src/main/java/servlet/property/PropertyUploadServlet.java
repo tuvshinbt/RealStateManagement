@@ -42,8 +42,9 @@ public class PropertyUploadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("mainMenu", "Upload property");
-		request.getSession().setAttribute("agents", Agent.getAgentList());
-		response.sendRedirect("property_upload.jsp");
+		request.setAttribute("agents", Agent.getAgentList());
+		RequestDispatcher rq = getServletContext().getRequestDispatcher("/property/property_upload.jsp");
+		rq.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

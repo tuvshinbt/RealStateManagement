@@ -4,6 +4,55 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setLocale value="en_US" />
 <t:layout>
+	<script type="text/javascript">
+// 		$(document).ready(function() {
+		$("#feedbackFrm").submit(feedbackFrmSubmit);
+		function feedbackFrmSubmit(e) {
+			e.preventDefault();
+// 			e.stopPropagation();
+			var posting = $.post( "property", { feedbackPropertyId: $("#feedbackPropertyId").val()});
+			
+			posting.done(function( data ) {
+				alert('success' + data);
+			});
+// 			$.ajax({
+// 				url : "property",
+// 				method: "POST",
+// 				data: { 
+// 					'feedbackPropertyId': $("#feedbackPropertyId").val(), 
+// 				},
+// 				dataType : "text/html",
+// 				progress : function() {
+// 					console.log('progress');
+// 				},
+// 				success : function() {
+// 					console.log('success');
+// 				}
+// 			}).done(function(jdata) {
+// 				$("#feedbackBoard").text(
+// 						"done" + jdata);
+// 			}).fail(function(jdata) {
+// 				$("#feedbackBoard").text(
+// 						"fail" + jdata);
+// 			}).always(function(jdata) {
+// 				var dt = new Date();
+// 				var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+// 				$("#feedbackBoard").text("AJAX loaded JSON data at " + time);
+// 				e.preventDefault();
+// 			}).then(function() {
+// 				console.log('this will run if the $.get succeeds');
+// 			},
+// 			function() {
+// 				console.log('this will run if the $.get fails');
+// 			},
+// 			function(data) {
+// 				console.log('this will run if the deferred generates a progress update'
+// 								+ data);
+// 			});
+			e.preventDefault();
+		}
+// 	});
+	</script>
 	<div class="inside-banner">
 		<div class="container">
 			<span class="pull-right"><a href="${ContextPath}/property/list">View All Listing</a> / Back</span>
@@ -66,6 +115,8 @@
 										<div id="myCarousel" class="carousel slide" data-ride="carousel">
 											<!-- Indicators -->
 											<ol class="carousel-indicators hidden-xs">
+												<c:set var="pagerStart" value="1"></c:set>
+												<c:set var="range" value=""></c:set>
 												<c:forEach var="pageNum" begin="1" end="${property.getPicturePathList().size()}">
 													<c:choose>
 														<c:when test="${pageNum == 1}">
@@ -77,16 +128,16 @@
 													</c:choose>
 												</c:forEach>
 											</ol>
-
 											<div class="carousel-inner">
-												<!-- Item -->
+
 												<c:set var="firstPic" value="true" />
-												<c:forEach var="picturePath" items="${property.getPicturePathList()}">
+												<c:forEach var="picturePath" items="${propertyModel.property.picturePathList}">
 													<c:choose>
-														<c:when test="${firstPic}">
+														<c:when test="${firstPic == true}">
 															<div class="item active">
 																<img src="${ContextPath}/public/uploads/${picturePath}" class="properties" alt="properties" />
 															</div>
+															<c:set var="firstPic" value="false"></c:set>
 														</c:when>
 														<c:otherwise>
 															<div class="item">
@@ -95,12 +146,12 @@
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-												<!-- #Item -->
 											</div>
-
-											<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span
-												class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#myCarousel"
-												data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+											<a class="left carousel-control" href="#myCarousel" data-slide="prev"> <span
+												class="glyphicon glyphicon-chevron-left"></span>
+											</a> <a class="right carousel-control" href="#myCarousel" data-slide="next"> <span
+												class="glyphicon glyphicon-chevron-right"></span>
+											</a>
 										</div>
 										<!-- #Slider Ends -->
 									</div>
@@ -111,50 +162,55 @@
 											<span class="glyphicon glyphicon-th-list"></span> Description
 										</h4>
 										<p>${property.getDescription()}</p>
-									</div><!-- spacer -->
-									
+									</div>
+									<!-- spacer -->
+
 									<!-- start of FEEDBACK -->
 									<div>
-									    <h4><span class="glyphicon glyphicon-comment"></span> Feedback</h4> 
-										    <c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
-												<div class="panel panel-default feedback">
-										        <div class="panel-heading feedback_header">(<b>
-										            <c:choose>
-														<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
+										<h4>
+											<span class="glyphicon glyphicon-comment"></span> Feedback
+										</h4>
+										<div id="feedbackBoard"></div>
+										<c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
+											<div class="panel panel-default feedback">
+												<div class="panel-heading feedback_header">
+													(<b> <c:choose>
+															<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
 															Buyer
 														</c:when>
-														<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
+															<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
 															Seller
 														</c:when>
-														<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
+															<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
 															Agent
 														</c:when>
-														<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
+															<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
 															ADMIN
 														</c:when>
-													</c:choose></b>) - 
-													${propertyFeedback.getAccount().getFirstName()} 
-										            ${propertyFeedback.getAccount().getLastName()}
-										        </div>
-										        <div class="panel-body feedback_content">
-										        	${propertyFeedback.getComment()}
-										            <div>Posted on : 
-										            	<fmt:formatDate type="date" pattern="MMM d, yyyy - h:m a"
-														value="${propertyFeedback.getProperty().getRegisterDate()}" /></div>
-										        </div>
-										    </div>
+														</c:choose></b>) - ${propertyFeedback.getAccount().getFirstName()} ${propertyFeedback.getAccount().getLastName()}
+												</div>
+												<div class="panel-body feedback_content">
+													${propertyFeedback.getComment()}
+													<div>
+														Posted on :
+														<fmt:formatDate type="date" pattern="MMM d, yyyy - h:m a"
+															value="${propertyFeedback.getProperty().getRegisterDate()}" />
+													</div>
+												</div>
+											</div>
 										</c:forEach>
 
-									    <form class="" role="form" action="${ContextPath}/property" method="POST" id="feedbackId" name="feedback">
-									        <div class="feedback">
-									            <input type="hidden" name="feedbackPropertyId" value="${property.getId()}">
-									            <textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
-									            <button type="submit" class="btn btn-success" name="Submit">Send Message</button>
-									        </div>
-									    </form>
+										<form id="feedbackFrm" class="" role="form" action="${ContextPath}/property" method="POST" id="feedbackId"
+											name="feedback">
+											<div class="feedback">
+												<input id="feedbackPropertyId" type="hidden" name="feedbackPropertyId" value="${property.getId()}">
+												<textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
+												<button id="sendMsgBtn" type="submit" class="btn btn-success" name="Submit">Send Message</button>
+											</div>
+										</form>
 									</div>
 									<!-- end of FEEDBACK -->
-									
+
 
 								</div>
 								<!-- col-lg-8 -->

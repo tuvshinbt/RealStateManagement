@@ -3,19 +3,14 @@ package servlet.property;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.velocity.tools.generic.DateTool;
 
 import constants.OHRT;
 import models.Property;
@@ -24,9 +19,7 @@ import models.User;
 import models.dao.PropertyDAO;
 import models.dao.PropertyFeedbackDAO;
 import models.web.property.PropertyModel;
-import utils.Path;
 import utils.RequestUtil;
-import utils.ViewUtil;
 
 @WebServlet(urlPatterns = "/property")
 public class PropertyItemServlet extends HttpServlet {
@@ -91,7 +84,9 @@ public class PropertyItemServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId);
+//			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId);
+			res.setContentType("text/html;charset=utf8");
+			res.getWriter().append("Hello from the server");
 		} else {
 			req.setAttribute("msg", "Please login to continue.");
 			req.getSession().setAttribute("redirecturl",

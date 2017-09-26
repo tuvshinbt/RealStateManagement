@@ -101,15 +101,11 @@
 						<li><a href="${ContextPath}/index">Home</a></li>
 						<li><a href="${ContextPath}/agents">Agents</a></li>
 						<c:if test="${not empty currentUser}">
+							<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
 							<c:choose>
 								<c:when test="${currentUser.role == 4}">
 									<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
 								</c:when>
-								<c:when test="${currentUser.role == 2}">
-									<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
 							</c:choose>
 							<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
 							<li><a href="${ContextPath}/order/list">Orders</a></li>
@@ -129,7 +125,7 @@
 											<c:otherwise>
 												ADMIN
 											</c:otherwise>
-										</c:choose> <!-- 								</a></li> --> <!-- 								<li><a> --> - <span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
+										</c:choose> <span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
 								<li>
 									<form method="get" action="${ContextPath}/logout">
 										<button id="logout">Log Out</button>
@@ -155,20 +151,20 @@
 		<div class="header">
 			<a href="${ContextPath}/index"><img src="${ContextPath}/public/images/logo.png" alt="Realestate"></a>
 			<ul class="pull-right">
-				<c:if test="${not empty currentUser}">
-					<c:choose>
-						<c:when test="${currentUser.role == 4}">
-							<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
-						</c:when>
-						<c:when test="${currentUser.role == 2}">
-							<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-					</c:choose>
-					<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
-					<li><a href="${ContextPath}/order/list">Orders</a></li>
-				</c:if>
+<%-- 				<c:if test="${not empty currentUser}"> --%>
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${currentUser.role == 4}"> --%>
+<%-- 							<li><a href="${ContextPath}/property/requests">Pending requests</a></li> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:when test="${currentUser.role == 2}"> --%>
+<%-- 							<li><a href="${ContextPath}/property/property_upload">Upload property</a></li> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:otherwise> --%>
+<%-- 						</c:otherwise> --%>
+<%-- 					</c:choose> --%>
+<%-- 					<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li> --%>
+<%-- 					<li><a href="${ContextPath}/order/list">Orders</a></li> --%>
+<%-- 				</c:if> --%>
 				<li><a href="#" onclick="submitForm(2)">Sell</a></li>
 				<li><a href="#" onclick="submitForm(1)">Rent</a></li>
 			</ul>
