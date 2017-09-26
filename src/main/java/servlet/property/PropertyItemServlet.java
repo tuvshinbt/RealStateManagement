@@ -25,7 +25,7 @@ import models.web.property.PropertyModel;
 import utils.Path;
 import utils.ViewUtil;
 
-@WebServlet(urlPatterns = "/property/item")
+@WebServlet(urlPatterns = "/property")
 public class PropertyItemServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

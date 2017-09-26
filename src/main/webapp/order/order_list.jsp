@@ -33,7 +33,7 @@
 							</tr>
 
 							<c:if test="${not empty orderList}">
-								<c:forEach var="order" items="orderList">
+								<c:forEach var="order" items="${orderList}">
 									<tr class="active">
 										<td>${order.getId()}</td>
 										<td>${order.getAccount().getFirstName()}</td>
@@ -67,7 +67,7 @@
 										<td><a href="${ContextPath}/order?orderId=${order.getId()}">View</a></td>
 										<td>
 											<c:if test="${not empty currentUser}">
-												<c:if test="${currentUser.Role == 2}">
+												<c:if test="${currentUser.getRole() == 2}">
 													<c:if test="${order.getStatus() == 1}">
 														<a href="${ContextPath}/order/approve?orderId=${order.getId()}">Approve</a>
 													</c:if>

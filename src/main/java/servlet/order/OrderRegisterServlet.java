@@ -43,20 +43,24 @@ public class OrderRegisterServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Integer propertyId = Integer.parseInt(req.getParameter("propertyId"));
 		String orderType = req.getParameter("orderType");
-		Double offerBuyAmount = Double.parseDouble(req.getParameter("offerBuyAmount"));
-		Integer offerRentMonths = Integer.parseInt(req.getParameter("offerRentMonths"));
-		Double offerRentPerMonthAmount = Double.parseDouble(req.getParameter("offerRentPerMonthAmount"));
-		Double offerRentDespositAmount = Double.parseDouble(req.getParameter("offerRentDespositAmount"));
-		Boolean offerIsExtend = Boolean.parseBoolean(req.getParameter("offerIsExtend"));
+		Double offerBuyAmount = req.getParameter("offerBuyAmount") != null
+				? Double.parseDouble(req.getParameter("offerBuyAmount")) : null;
+		Integer offerRentMonths = req.getParameter("offerRentMonths") != null
+				? Integer.parseInt(req.getParameter("offerRentMonths")) : null;
+		Double offerRentPerMonthAmount = req.getParameter("offerRentPerMonthAmount") != null
+				? Double.parseDouble(req.getParameter("offerRentPerMonthAmount")) : null;
+		Double offerRentDespositAmount = req.getParameter("offerRentDespositAmount") != null
+				? Double.parseDouble(req.getParameter("offerRentDespositAmount")) : null;
+		Boolean offerIsExtend = req.getParameter("offerIsExtend") != null
+				? Boolean.parseBoolean(req.getParameter("offerIsExtend")) : null;
 		String offerDescription = req.getParameter("offerDescription");
 
 		User loggedUser = RequestUtil.getSessionCurrentUser(req);
 		if (loggedUser != null) {
 			try {
-
 				Order order = null;
 				if (orderType.equalsIgnoreCase(OHRT.ORDER.TYPE.RENT)) {
 					// Rent
@@ -75,8 +79,11 @@ public class OrderRegisterServlet extends HttpServlet {
 			}
 			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/order/list");
 		} else {
-			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/order/register?propertyId="
-					+ propertyId + "&orderType=" + orderType);
+			req.setAttribute("msg", "Please login to continue.");
+			req.getSession().setAttribute("redirecturl", getServletContext().getAttribute("ContextPath")
+					+ "/order/register?propertyId=" + propertyId + "&orderType=" + orderType);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+			rd.forward(req, res);
 		}
 
 	}

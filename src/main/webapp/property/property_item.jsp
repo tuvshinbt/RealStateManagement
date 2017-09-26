@@ -131,7 +131,51 @@
 											<span class="glyphicon glyphicon-th-list"></span> Description
 										</h4>
 										<p>${property.getDescription()}</p>
+									</div><!-- spacer -->
+									
+									<!-- start of FEEDBACK -->
+									<div>
+									    <h4><span class="glyphicon glyphicon-comment"></span> Feedback</h4> 
+										    <c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
+												<div class="panel panel-default feedback">
+										        <div class="panel-heading feedback_header">
+										            <c:choose>
+														<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
+															<b>Buyer</b>) - 
+														</c:when>
+														<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
+															<b>Seller</b>) - 
+														</c:when>
+														<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
+															<b>Agent</b>) - 
+														</c:when>
+														<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
+															<b>ADMIN</b>) - 
+														</c:when>
+													</c:choose>
+													${propertyFeedback.getAccount().getFirstName()} 
+										            ${propertyFeedback.getAccount().getLastName()}
+										        </div>
+										        <div class="panel-body feedback_content">
+										        	${propertyFeedback.getComment()}
+										            <div>Posted on : 
+										            	<fmt:formatDate type="date" pattern="MMM d, yyyy - h:m a"
+														value="${propertyFeedback.getProperty().getRegisterDate()}" /></div>
+										        </div>
+										    </div>
+										</c:forEach>
+
+									    <form class="" role="form" action="${ContextPath}/property/${property.getId()}" method="POST" id="feedbackId" name="feedback">
+									        <div class="feedback">
+									            <input type="hidden" name="feedbackPropertyId" value="${property.getId()}">
+									            <textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
+									            <button type="submit" class="btn btn-success" name="Submit">Send Message</button>
+									        </div>
+									    </form>
 									</div>
+									<!-- end of FEEDBACK -->
+									
+
 								</div>
 								<!-- col-lg-8 -->
 
