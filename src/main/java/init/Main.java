@@ -26,7 +26,7 @@ public class Main {
 		// routes
 //		get("/", MainController.initHome);
 		//get("/login", LoginController.initLoginPage);
-		get("/register", LoginController.initRegisterPage);
+		//get("/register", LoginController.initRegisterPage);
 		//get("/agents", AgentController.initAgentListPage);
 
 		post(Path.Web.LOGIN, LoginController.handleLoginPost);
@@ -38,11 +38,11 @@ public class Main {
 			//get("/upload", PropertyController.initUploadPage);
 			//get("/list", PropertyController.getItemListPage);
 			//post("/list", PropertyController.postItemListPage);
-			post("/bookAppt/request", BookAppointmentController.requestBookApptPost);
-			get("/bookAppt/requests", BookAppointmentController.initBookApptsRequestsPage);
-			get("/bookAppt/approve/:id", BookAppointmentController.approveBookApptPost);
-			get("/requests", RequestsPropertiesController.initRequestsPage);
-			get("/approve/:id", RequestsPropertiesController.approvePropertyPost);
+			//post("/bookAppt/request", BookAppointmentController.requestBookApptPost);
+			//get("/bookAppt/requests", BookAppointmentController.initBookApptsRequestsPage);
+			//get("/bookAppt/approve/:id", BookAppointmentController.approveBookApptPost);
+			//get("/requests", RequestsPropertiesController.initRequestsPage);
+			//get("/approve/:id", RequestsPropertiesController.approvePropertyPost);
 			//get("/:id", PropertyController.getItemPage);
 			//post("/:id", PropertyController.postItemPageFeedback);
 		});
