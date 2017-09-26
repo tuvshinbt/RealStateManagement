@@ -3,17 +3,15 @@ package utils;
 import javax.servlet.http.HttpServletRequest;
 
 import models.User;
-import spark.*;
+import spark.Request;
 
 public class RequestUtil {
 	public static User getSessionCurrentUser(Request request) {
-		return (User) request.session()
-				.attribute("currentUser");
+		return (User) request.session().attribute("currentUser");
 	}
 
 	public static String getRedirectUrl(Request request) {
-		return (String) request.session()
-				.attribute("redirecturl");
+		return (String) request.session().attribute("redirecturl");
 	}
 
 	/**
@@ -24,8 +22,7 @@ public class RequestUtil {
 	 * @return
 	 */
 	public static User getSessionCurrentUser(HttpServletRequest request) {
-		return (User) request.getSession()
-				.getAttribute("currentUser");
+		return (User) request.getSession().getAttribute("currentUser");
 	}
 
 	/**
@@ -36,7 +33,6 @@ public class RequestUtil {
 	 * @return
 	 */
 	public static String getRedirectUrl(HttpServletRequest request) {
-		return (String) request.getSession()
-				.getAttribute("redirecturl");
+		return (String) request.getSession().getAttribute("redirecturl");
 	}
 }

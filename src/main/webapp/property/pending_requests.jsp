@@ -33,7 +33,7 @@
 									<td>${hotProperty.utilitiesCost}</td>
 									<td>${hotProperty.getOwner().getFirstName()}</td>
 									<td>${hotProperty.getPurposeKey()}</td>
-									<td><a href="item?id=${hotProperty.id}">View</a></td>
+									<td><a href="${ContextPath}/property?id=${hotProperty.id}">View</a></td>
 									<td><a href="approve?id=${hotProperty.id}">Approve</a></td>
 								</tr>
 							</c:forEach>

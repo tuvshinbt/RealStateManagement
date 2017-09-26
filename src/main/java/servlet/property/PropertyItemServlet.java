@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import constants.OHRT;
 import models.Property;
 import models.PropertyFeedback;
@@ -30,6 +32,8 @@ public class PropertyItemServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 	}
+
+	Gson gson = new Gson();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -81,12 +85,13 @@ public class PropertyItemServlet extends HttpServlet {
 				feedback.setRegisterDate(new Date());
 				feedback.setStatus(1);
 				PropertyFeedbackDAO.save(feedback);
+				// res.sendRedirect(getServletContext().getAttribute("ContextPath")
+				// + "/property?id=" + propertyId);
+				res.setContentType("application/json");
+				res.getWriter().write(gson.toJson(feedback));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-//			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId);
-			res.setContentType("text/html;charset=utf8");
-			res.getWriter().append("Hello from the server");
 		} else {
 			req.setAttribute("msg", "Please login to continue.");
 			req.getSession().setAttribute("redirecturl",

@@ -5,53 +5,89 @@
 <fmt:setLocale value="en_US" />
 <t:layout>
 	<script type="text/javascript">
-// 		$(document).ready(function() {
-		$("#feedbackFrm").submit(feedbackFrmSubmit);
-		function feedbackFrmSubmit(e) {
-			e.preventDefault();
-// 			e.stopPropagation();
-			var posting = $.post( "property", { feedbackPropertyId: $("#feedbackPropertyId").val()});
-			
-			posting.done(function( data ) {
-				alert('success' + data);
+		window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function() {
+				$(this).remove();
 			});
-// 			$.ajax({
-// 				url : "property",
-// 				method: "POST",
-// 				data: { 
-// 					'feedbackPropertyId': $("#feedbackPropertyId").val(), 
-// 				},
-// 				dataType : "text/html",
-// 				progress : function() {
-// 					console.log('progress');
-// 				},
-// 				success : function() {
-// 					console.log('success');
-// 				}
-// 			}).done(function(jdata) {
-// 				$("#feedbackBoard").text(
-// 						"done" + jdata);
-// 			}).fail(function(jdata) {
-// 				$("#feedbackBoard").text(
-// 						"fail" + jdata);
-// 			}).always(function(jdata) {
-// 				var dt = new Date();
-// 				var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-// 				$("#feedbackBoard").text("AJAX loaded JSON data at " + time);
-// 				e.preventDefault();
-// 			}).then(function() {
-// 				console.log('this will run if the $.get succeeds');
-// 			},
-// 			function() {
-// 				console.log('this will run if the $.get fails');
-// 			},
-// 			function(data) {
-// 				console.log('this will run if the deferred generates a progress update'
-// 								+ data);
-// 			});
-			e.preventDefault();
-		}
-// 	});
+		}, 2000);
+		$(document).ready(function() {
+			$("#feedbackFrm").submit(function(e) {
+				e.preventDefault();
+			});
+			$("#sendMsgBtn").click(function(e) {
+				$.ajax({
+					url : 'property',
+					method : 'POST',
+					dataType : 'json',
+					data : {
+						'feedbackPropertyId': $("#feedbackPropertyId").val(),
+						'comment': $("#comment").val()
+					},
+					success : function(responseObj) {
+						$('#feedbackBoard').html(function() { return'<div class="alert alert-success alert-dismissable">' + 
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' +
+								'<strong>Successful!</strong>' +
+								'</div>'});
+						$feedbackHtml = '<div class="panel panel-default feedback">';
+						$feedbackHtml += '<div class="panel-heading feedback_header">';
+						$feedbackHtml += '(<b>';
+						if (responseObj.account.role  == 1) {
+							$feedbackHtml += 'Buyer';
+						} else if (responseObj.account.role  == 2) {
+							$feedbackHtml += 'Seller';
+						} else if (responseObj.account.role  == 3) {
+							$feedbackHtml += 'Agent';
+						} else {
+							$feedbackHtml += 'ADMIN';
+						}
+						$feedbackHtml += '</b>) - ' + responseObj.account.firstName + ' ' + responseObj.account.lastName;
+						$feedbackHtml += '</div>';
+						$feedbackHtml += '<div class="panel-body feedback_content">';
+						$feedbackHtml += responseObj.comment;
+						$feedbackHtml += '<div>';
+						$feedbackHtml += 'Posted on :';
+						$feedbackHtml += responseObj.registerDate;
+						$feedbackHtml += '</div>';
+						$feedbackHtml += '</div>';
+						$feedbackHtml += '</div>';
+						$('#feedbackMsg').append($feedbackHtml);
+						$('#comment').val('');
+					},
+					progress : function() {
+						console.log('progress');
+					},
+					error : function(jqXHR, exception) {
+						var msg = '';
+						if (jqXHR.status === 0) {
+							msg = 'Not connect.\n Verify Network.';
+						} else if (jqXHR.status == 404) {
+							msg = 'Requested page not found. [404]';
+						} else if (jqXHR.status == 500) {
+							msg = 'Internal Server Error [500].';
+						} else if (exception === 'parsererror') {
+							msg = 'Requested JSON parse failed.';
+						} else if (exception === 'timeout') {
+							msg = 'Time out error.';
+						} else if (exception === 'abort') {
+							msg = 'Ajax request aborted.';
+						} else {
+							msg = 'Uncaught Error.\n' + jqXHR.responseText;
+						}
+						$('#feedbackBoard').html(function() { return '<div class="alert alert-danger alert-dismissable">' + 
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' +
+								'<strong>Successful!</strong>' + msg + 
+								'</div>'});
+					}
+				}).done(function(jdata) {
+				}).fail(function(jdata) {
+					$("#feedbackBoard").text("fail" + jdata);
+				}).always(function(jdata) {
+				}).then(function() {
+				}, function() {
+				}, function(data) {
+				});
+			});
+		});
 	</script>
 	<div class="inside-banner">
 		<div class="container">
@@ -171,46 +207,46 @@
 											<span class="glyphicon glyphicon-comment"></span> Feedback
 										</h4>
 										<div id="feedbackBoard"></div>
-										<c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
-											<div class="panel panel-default feedback">
-												<div class="panel-heading feedback_header">
-													(<b> <c:choose>
-															<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
-															Buyer
-														</c:when>
-															<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
-															Seller
-														</c:when>
-															<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
-															Agent
-														</c:when>
-															<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
-															ADMIN
-														</c:when>
-														</c:choose></b>) - ${propertyFeedback.getAccount().getFirstName()} ${propertyFeedback.getAccount().getLastName()}
-												</div>
-												<div class="panel-body feedback_content">
-													${propertyFeedback.getComment()}
-													<div>
-														Posted on :
-														<fmt:formatDate type="date" pattern="MMM d, yyyy - h:m a"
-															value="${propertyFeedback.getProperty().getRegisterDate()}" />
+										<div id="feedbackMsg">
+											<c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
+												<div class="panel panel-default feedback">
+													<div class="panel-heading feedback_header">
+														(<b> <c:choose>
+																<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
+																Buyer
+															</c:when>
+																<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
+																Seller
+															</c:when>
+																<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
+																Agent
+															</c:when>
+																<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
+																ADMIN
+															</c:when>
+															</c:choose></b>) - ${propertyFeedback.getAccount().getFirstName()} ${propertyFeedback.getAccount().getLastName()}
+													</div>
+													<div class="panel-body feedback_content">
+														${propertyFeedback.getComment()}
+														<div>
+															Posted on : <fmt:formatDate type="date" pattern="MMM d, yyyy - h:m:s a"
+																value="${propertyFeedback.getRegisterDate()}" />
+														</div>
 													</div>
 												</div>
-											</div>
-										</c:forEach>
+											</c:forEach>
+										</div>
 
 										<form id="feedbackFrm" class="" role="form" action="${ContextPath}/property" method="POST" id="feedbackId"
 											name="feedback">
 											<div class="feedback">
 												<input id="feedbackPropertyId" type="hidden" name="feedbackPropertyId" value="${property.getId()}">
-												<textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
+												<textarea id="comment" rows="2" class="form-control" name="comment" placeholder="Message"></textarea>
 												<button id="sendMsgBtn" type="submit" class="btn btn-success" name="Submit">Send Message</button>
 											</div>
 										</form>
 									</div>
 									<!-- end of FEEDBACK -->
-
 
 								</div>
 								<!-- col-lg-8 -->
@@ -315,9 +351,10 @@
 											<h6>
 												<span class="glyphicon glyphicon-envelope"></span> Send request
 											</h6>
-											<form role="form" action="bookappointment" method="POST">
+											<form role="form" action="property/bookappointment" method="POST">
 												<input type="datetime-local" id="datepicker" class="form-control" placeholder="Appointment Date Time"
-													name="appointment_date" required="required" /> <input type="hidden" name="property_id"
+													name="appointment_date" required="required" /> 
+													<input type="hidden" name="property_id"
 													value="${property.getId()}" />
 												<textarea rows="6" class="form-control" placeholder="What do you want to tell about appointment?"
 													name="appointment_info" required="required"></textarea>

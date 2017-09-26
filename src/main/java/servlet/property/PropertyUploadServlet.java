@@ -168,9 +168,7 @@ public class PropertyUploadServlet extends HttpServlet {
 			images.forEach((image) -> {
 				image.create(property_id);
 			});
-			// response.sendRedirect(getServletContext().getAttribute("ContextPath")
-			// + "/index?id=" + property_id);
-			response.sendRedirect("/property?id=" + property_id);
+			response.sendRedirect("../property?id=" + property_id);
 		}
 	}
 

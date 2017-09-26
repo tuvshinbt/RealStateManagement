@@ -73,7 +73,7 @@
 									</div>
 									<div class="col-lg-8 col-sm-7">
 										<h5>
-											<a href="property/${property.id}">${property.name}</a>
+											<a href="${ContextPath}/property?id=${property.id}">${property.name}</a>
 										</h5>
 										<p class="price">
 											Price:
@@ -134,7 +134,7 @@
 											</c:choose>
 										</div>
 										<h4>
-											<a href="/property/${property.id}">${property.name}</a>
+											<a href="${ContextPath}/property?id=${property.id}">${property.name}</a>
 										</h4>
 										<p class="price">
 											Price:
@@ -146,7 +146,7 @@
 											<span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">${property.parking}</span>
 											<span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">${property.kitchen}</span>
 										</div>
-										<a class="btn btn-primary" href="/property/${property.id}">View Details</a>
+										<a class="btn btn-primary" href="${ContextPath}/property?id=${property.id}">View Details</a>
 									</div>
 								</div>
 								<!-- properties -->

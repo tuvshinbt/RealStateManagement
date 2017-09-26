@@ -16,7 +16,7 @@
 						</h2>
 						<blockquote>
 							<p class="location">
-								<span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia
+								<span class="glyphicon glyphicon-map-marker"></span>
 							</p>
 							<p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
 							<cite>$ 20,000,000</cite>
@@ -33,7 +33,7 @@
 						</h2>
 						<blockquote>
 							<p class="location">
-								<span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia
+								<span class="glyphicon glyphicon-map-marker"></span>
 							</p>
 							<p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
 							<cite>$ 20,000,000</cite>
@@ -50,7 +50,7 @@
 						</h2>
 						<blockquote>
 							<p class="location">
-								<span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia
+								<span class="glyphicon glyphicon-map-marker"></span>
 							</p>
 							<p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
 							<cite>$ 20,000,000</cite>
@@ -67,7 +67,7 @@
 						</h2>
 						<blockquote>
 							<p class="location">
-								<span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia
+								<span class="glyphicon glyphicon-map-marker"></span>
 							</p>
 							<p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
 							<cite>$ 20,000,000</cite>
@@ -84,7 +84,7 @@
 						</h2>
 						<blockquote>
 							<p class="location">
-								<span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia
+								<span class="glyphicon glyphicon-map-marker"></span>
 							</p>
 							<p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
 							<cite>$ 20,000,000</cite>

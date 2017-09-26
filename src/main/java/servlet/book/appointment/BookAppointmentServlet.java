@@ -49,7 +49,7 @@ public class BookAppointmentServlet extends HttpServlet {
 			} else {
 				request.setAttribute("msg", "Failed to book appointment!");
 			}
-			response.sendRedirect("item?id=" + propertyID);
+			response.sendRedirect("../property?id=" + propertyID);
 		}
 	}
 
