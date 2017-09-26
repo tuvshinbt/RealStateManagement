@@ -1,4 +1,4 @@
-package servlet;
+package servlet.property;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,25 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import constants.OHRT;
 import models.Property;
-import models.PropertyFeedback;
 import models.dao.PropertyDAO;
-import models.dao.PropertyFeedbackDAO;
 import models.web.property.PropertyListModel;
-import models.web.property.PropertyModel;
-import utils.Path;
-import utils.ViewUtil;
 
 /**
  * Servlet implementation class PropertListGetItemPage
  */
-@WebServlet("/PropertListGetItemPage")
-public class PropertListGetItemPage extends HttpServlet {
+@WebServlet("/property/list")
+public class PropertListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PropertListGetItemPage() {
+	public PropertListServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -46,7 +41,6 @@ public class PropertListGetItemPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Map<String, Object> map = new HashMap<String, Object>();
 			PropertyListModel propertyListModel = new PropertyListModel();
 			propertyListModel.setCurrentPage(1);
 			// hot Properties
@@ -67,7 +61,7 @@ public class PropertListGetItemPage extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rq = getServletContext().getRequestDispatcher("/property_list.jsp");
+		RequestDispatcher rq = getServletContext().getRequestDispatcher("/property/property_list.jsp");
 		rq.forward(request, response);
 	}
 
@@ -131,7 +125,7 @@ public class PropertListGetItemPage extends HttpServlet {
 			System.err.println(e.getMessage());
 		}
 		ServletContext context = getServletContext();
-		RequestDispatcher rq = context.getRequestDispatcher("/property_list.jsp");
+		RequestDispatcher rq = context.getRequestDispatcher("/property/property_list.jsp");
 		rq.forward(request, response);
 	}
 

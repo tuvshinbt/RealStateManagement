@@ -12,6 +12,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="${ContextPath}/public/assets/bootstrap/js/bootstrap.js"></script>
 <script src="${ContextPath}/public/assets/script.js"></script>
+<%-- <script src="${ContextPath}/public/vendor/jquery/jquery.min.js"></script> --%>
 
 
 
@@ -36,7 +37,7 @@
 
 		var form = document.createElement("form");
 		form.method = "POST";
-		form.action = "/property/list";
+		form.action = "${ContextPath}/property/list";
 
 		var element1 = document.createElement("input");
 		element1.name = "searchBy";
@@ -91,6 +92,20 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="active"><a href="${ContextPath}/index">Home</a></li>
 						<li><a href="${ContextPath}/agents">Agents</a></li>
+						<c:if test="${not empty currentUser}">
+							<c:choose>
+								<c:when test="${currentUser.role == 4}">
+									<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
+								</c:when>
+								<c:when test="${currentUser.role == 2}">
+									<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
+							<li><a href="${ContextPath}/order/list">Orders</a></li>
+						</c:if>
 						<c:choose>
 							<c:when test="${currentUser != null}">
 								<li><a> <c:choose>
@@ -106,8 +121,11 @@
 											<c:otherwise>
 												ADMIN
 											</c:otherwise>
-										</c:choose></a></li>
-								<li><a><span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
+										</c:choose>
+<!-- 								</a></li> -->
+<!-- 								<li><a> -->
+									- 
+								<span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
 								<li>
 									<form method="get" action="${ContextPath}/logout">
 										<button id="logout">Log Out</button>
@@ -144,7 +162,7 @@
 						<c:otherwise>
 						</c:otherwise>
 					</c:choose>
-					<li><a href="${ContextPath}/property/bookAppt/requests">Appointments</a></li>
+					<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
 					<li><a href="${ContextPath}/order/list">Orders</a></li>
 				</c:if>
 				<li><a href="#" onclick="submitForm(2)">Sell</a></li>
@@ -170,7 +188,7 @@
 								<c:otherwise>
 								</c:otherwise>
 							</c:choose>
-							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/property/bookAppt/requests">Appointments</a></li>
+							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
 							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/order/list">Orders</a></li>
 						</c:if>
 						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/agents">Agents</a></li>
@@ -190,7 +208,7 @@
 					<h4>Contact us</h4>
 					<p>
 						<b>Group #3.</b><br> <span class="glyphicon glyphicon-map-marker"></span> 1000 N 4th St, IA, USA, 52557 <br>
-						<span class="glyphicon glyphicon-envelope"></span> bbadarch@mum.edu<br> <span
+						<span class="glyphicon glyphicon-envelope"></span><a href="mailto:name@email.com"> bbadarch@mum.edu</a><br> <span
 							class="glyphicon glyphicon-earphone"></span> (111) 999-9999
 					</p>
 				</div>

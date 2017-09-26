@@ -105,11 +105,11 @@
 	<div class="banner-search">
 		<div class="container">
 			<!-- banner -->
-			<h3>Sell & Rent</h3>
+			<h3>Sell &amp; Rent</h3>
 			<div class="searchbar">
 				<div class="row">
 					<div class="col-lg-6 col-sm-6">
-						<form class="" role="form" action="/property/list" method="POST" id="propertyListModelId" name="propertyListModel">
+						<form class="" role="form" action="property/list" method="POST" id="propertyListModelId" name="propertyListModel">
 							<input type="text" class="form-control" name="searchBy" placeholder="Search of Properties">
 							<div class="row">
 								<div class="col-lg-4 col-sm-5 ">
@@ -146,7 +146,7 @@
 	<!-- banner -->
 	<div class="container">
 		<div class="properties-listing spacer">
-			<a href="PropertListGetItemPage" class="pull-right viewall">View All Listing</a>
+			<a href="property/list" class="pull-right viewall">View All Listing</a>
 			<h2>Featured Properties</h2>
 			<div id="owl-example" class="owl-carousel">
 
@@ -169,7 +169,7 @@
 							</c:choose>
 						</div>
 						<h4>
-							<a href="property/${property.id}">${property.name}</a>
+							<a href="property?id=${property.id}">${property.name}</a>
 						</h4>
 						<p class="price">
 							Price:
@@ -182,7 +182,7 @@
 								data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">${property.parking}</span> <span
 								data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">${property.kitchen}</span>
 						</div>
-						<a class="btn btn-primary" href="property/${property.id}">View Details</a>
+						<a class="btn btn-primary" href="property?id=${property.id}">View Details</a>
 					</div>
 				</c:forEach>
 			</div>
@@ -224,48 +224,48 @@
 									</div>
 								</div>
 							</div>
-<!-- 							<div class="item"> -->
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-lg-4"> -->
-<!-- 										<img src="public/images/properties/2.jpg" class="img-responsive" alt="properties" /> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-lg-8"> -->
-<!-- 										<h5> -->
-<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
-<!-- 										</h5> -->
-<!-- 										<p class="price">$300,000</p> -->
-<!-- 										<a href="/property/1" class="more">More Detail</a> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="item"> -->
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-lg-4"> -->
-<!-- 										<img src="public/images/properties/3.jpg" class="img-responsive" alt="properties" /> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-lg-8"> -->
-<!-- 										<h5> -->
-<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
-<!-- 										</h5> -->
-<!-- 										<p class="price">$300,000</p> -->
-<!-- 										<a href="/property/1" class="more">More Detail</a> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="item"> -->
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-lg-4"> -->
-<!-- 										<img src="public/images/properties/4.jpg" class="img-responsive" alt="properties" /> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-lg-8"> -->
-<!-- 										<h5> -->
-<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
-<!-- 										</h5> -->
-<!-- 										<p class="price">$300,000</p> -->
-<!-- 										<a href="/property/1" class="more">More Detail</a> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
+							<!-- 							<div class="item"> -->
+							<!-- 								<div class="row"> -->
+							<!-- 									<div class="col-lg-4"> -->
+							<!-- 										<img src="public/images/properties/2.jpg" class="img-responsive" alt="properties" /> -->
+							<!-- 									</div> -->
+							<!-- 									<div class="col-lg-8"> -->
+							<!-- 										<h5> -->
+							<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+							<!-- 										</h5> -->
+							<!-- 										<p class="price">$300,000</p> -->
+							<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+							<!-- 									</div> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
+							<!-- 							<div class="item"> -->
+							<!-- 								<div class="row"> -->
+							<!-- 									<div class="col-lg-4"> -->
+							<!-- 										<img src="public/images/properties/3.jpg" class="img-responsive" alt="properties" /> -->
+							<!-- 									</div> -->
+							<!-- 									<div class="col-lg-8"> -->
+							<!-- 										<h5> -->
+							<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+							<!-- 										</h5> -->
+							<!-- 										<p class="price">$300,000</p> -->
+							<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+							<!-- 									</div> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
+							<!-- 							<div class="item"> -->
+							<!-- 								<div class="row"> -->
+							<!-- 									<div class="col-lg-4"> -->
+							<!-- 										<img src="public/images/properties/4.jpg" class="img-responsive" alt="properties" /> -->
+							<!-- 									</div> -->
+							<!-- 									<div class="col-lg-8"> -->
+							<!-- 										<h5> -->
+							<!-- 											<a href="/property/1">Integer sed porta quam</a> -->
+							<!-- 										</h5> -->
+							<!-- 										<p class="price">$300,000</p> -->
+							<!-- 										<a href="/property/1" class="more">More Detail</a> -->
+							<!-- 									</div> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

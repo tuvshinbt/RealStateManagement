@@ -143,7 +143,8 @@ public class PropertyUploadServlet extends HttpServlet {
 			int property_id = property.create(property, user.getId());
 			Collection<Part> parts = request.getParts();
 			BufferedImage img = null;
-			File uploadDir = new File(System.getProperty("catalina.base") + "/wtpwebapps/RealStateManagement/public/uploads/");
+			File uploadDir = new File(
+					System.getProperty("catalina.base") + "/wtpwebapps/RealStateManagement/public/uploads/");
 			uploadDir.mkdirs();
 
 			ArrayList<PropertyImage> images = new ArrayList<PropertyImage>();
@@ -167,8 +168,9 @@ public class PropertyUploadServlet extends HttpServlet {
 			images.forEach((image) -> {
 				image.create(property_id);
 			});
-			response.sendRedirect(getServletContext().getAttribute("ContextPath") + "/index?id=" + property_id);
-			// response.sendRedirect("/property/item?id=" + property_id);
+			// response.sendRedirect(getServletContext().getAttribute("ContextPath")
+			// + "/index?id=" + property_id);
+			response.sendRedirect("/property?id=" + property_id);
 		}
 	}
 

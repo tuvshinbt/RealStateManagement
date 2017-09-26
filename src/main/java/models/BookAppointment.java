@@ -14,43 +14,36 @@ public class BookAppointment {
 	private String appointmentComment;
 	private AppointmentStatus appointmentStatus;
 
-	public static boolean requestBookAppointment(String pPropertyID, String pApptDate, String pApptInfo, int pBuyerID){
+	public static boolean requestBookAppointment(String pPropertyID, String pApptDate, String pApptInfo, int pBuyerID) {
 		boolean isCreated = false;
-		String queryString = "INSERT INTO bookappointment "+
-								"(`PropertyID`, `BuyerID`, `AppointmentDate`, `AppointmentComment`, `AppointmentStatusID`)"+
-								" VALUES (:propertyid, :buyerid, :apptdate, :apptinfo, 1)";
+		String queryString = "INSERT INTO bookappointment "
+				+ "(`PropertyID`, `BuyerID`, `AppointmentDate`, `AppointmentComment`, `AppointmentStatusID`)"
+				+ " VALUES (:propertyid, :buyerid, :apptdate, :apptinfo, 1)";
 		try {
-            Connection conn = Sql2Object.open();
-            conn.createQuery(queryString)
-                    .addParameter("propertyid", pPropertyID)
-                    .addParameter("buyerid", pBuyerID)
-                    .addParameter("apptdate", pApptDate)
-                    .addParameter("apptinfo", pApptInfo)
-                    .executeUpdate();            
-            isCreated = true;
-        } catch ( Exception e ) {
-        	
-        }
+			Connection conn = Sql2Object.open();
+			conn.createQuery(queryString).addParameter("propertyid", pPropertyID).addParameter("buyerid", pBuyerID)
+					.addParameter("apptdate", pApptDate).addParameter("apptinfo", pApptInfo).executeUpdate();
+			isCreated = true;
+		} catch (Exception e) {
+
+		}
 		return isCreated;
 	}
-	
+
 	public static boolean approveAppointment(String id) {
 		boolean isApproved = false;
-		String queryString = "UPDATE BookAppointment SET AppointmentStatusID = 2"
-				+ " WHERE ID = :id";
+		String queryString = "UPDATE bookappointment SET AppointmentStatusID = 2" + " WHERE ID = :id";
 		try {
-            Connection conn = Sql2Object.open();
-            conn.createQuery(queryString)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            
-            isApproved = true;
-        } catch ( Exception e ) {
-        	e.printStackTrace();
-        }
+			Connection conn = Sql2Object.open();
+			conn.createQuery(queryString).addParameter("id", id).executeUpdate();
+
+			isApproved = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return isApproved;
 	}
-	
+
 	// #region [getter setter]
 	public int getId() {
 		return id;
