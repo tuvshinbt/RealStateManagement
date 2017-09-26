@@ -138,21 +138,21 @@
 									    <h4><span class="glyphicon glyphicon-comment"></span> Feedback</h4> 
 										    <c:forEach var="propertyFeedback" items="${propertyModel.getPropertyFeedbackList()}">
 												<div class="panel panel-default feedback">
-										        <div class="panel-heading feedback_header">
+										        <div class="panel-heading feedback_header">(<b>
 										            <c:choose>
 														<c:when test="${propertyFeedback.getAccount().getRole() == 1}">
-															<b>Buyer</b>) - 
+															Buyer
 														</c:when>
 														<c:when test="${propertyFeedback.getAccount().getRole() == 2}">
-															<b>Seller</b>) - 
+															Seller
 														</c:when>
 														<c:when test="${propertyFeedback.getAccount().getRole() == 3}">
-															<b>Agent</b>) - 
+															Agent
 														</c:when>
 														<c:when test="${propertyFeedback.getAccount().getRole() == 4}">
-															<b>ADMIN</b>) - 
+															ADMIN
 														</c:when>
-													</c:choose>
+													</c:choose></b>) - 
 													${propertyFeedback.getAccount().getFirstName()} 
 										            ${propertyFeedback.getAccount().getLastName()}
 										        </div>
@@ -165,7 +165,7 @@
 										    </div>
 										</c:forEach>
 
-									    <form class="" role="form" action="${ContextPath}/property/${property.getId()}" method="POST" id="feedbackId" name="feedback">
+									    <form class="" role="form" action="${ContextPath}/property" method="POST" id="feedbackId" name="feedback">
 									        <div class="feedback">
 									            <input type="hidden" name="feedbackPropertyId" value="${property.getId()}">
 									            <textarea rows="2" class="form-control" name="comment" placeholder="Message"></textarea>

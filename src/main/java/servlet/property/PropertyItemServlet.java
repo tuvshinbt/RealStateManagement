@@ -2,6 +2,7 @@ package servlet.property;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,12 @@ import org.apache.velocity.tools.generic.DateTool;
 import constants.OHRT;
 import models.Property;
 import models.PropertyFeedback;
+import models.User;
 import models.dao.PropertyDAO;
 import models.dao.PropertyFeedbackDAO;
 import models.web.property.PropertyModel;
 import utils.Path;
+import utils.RequestUtil;
 import utils.ViewUtil;
 
 @WebServlet(urlPatterns = "/property")
@@ -55,8 +58,7 @@ public class PropertyItemServlet extends HttpServlet {
 				propertyModel.setProperty(mainProperty);
 				List<PropertyFeedback> propertyFeedbackList;
 				try {
-					propertyFeedbackList = PropertyFeedbackDAO
-							.findActiveByPropertyId(mainProperty.getId());
+					propertyFeedbackList = PropertyFeedbackDAO.findActiveByPropertyId(mainProperty.getId());
 					propertyModel.setPropertyFeedbackList(propertyFeedbackList);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +67,7 @@ public class PropertyItemServlet extends HttpServlet {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
+
 		req.setAttribute("hotProperties", hotProperties);
 		req.setAttribute("propertyModel", propertyModel);
 
@@ -73,4 +75,29 @@ public class PropertyItemServlet extends HttpServlet {
 		rq.forward(req, res);
 	}
 
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		int propertyId = Integer.parseInt(req.getParameter("feedbackPropertyId"));
+		User user = RequestUtil.getSessionCurrentUser(req);
+		if (user != null) {
+			try {
+				PropertyFeedback feedback = new PropertyFeedback();
+				feedback.setAccount(user);
+				feedback.setComment(req.getParameter("comment"));
+				feedback.setProperty(PropertyDAO.findById(propertyId));
+				feedback.setRegisterDate(new Date());
+				feedback.setStatus(1);
+				PropertyFeedbackDAO.save(feedback);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			res.sendRedirect(getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId);
+		} else {
+			req.setAttribute("msg", "Please login to continue.");
+			req.getSession().setAttribute("redirecturl",
+					getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId + "#feedbackId");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+			rd.forward(req, res);
+		}
+	}
 }

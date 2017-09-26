@@ -44,6 +44,16 @@ public class OrderRegisterServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setAttribute("propertyId", req.getParameter("propertyId"));
+		req.setAttribute("orderType", req.getParameter("orderType"));
+
+		RequestDispatcher rq = getServletContext().getRequestDispatcher("/order/order_register.jsp");
+		rq.forward(req, res);
+	}
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Integer propertyId = Integer.parseInt(req.getParameter("propertyId"));
 		String orderType = req.getParameter("orderType");
 		Double offerBuyAmount = req.getParameter("offerBuyAmount") != null
