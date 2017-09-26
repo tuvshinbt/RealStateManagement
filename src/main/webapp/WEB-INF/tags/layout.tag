@@ -33,7 +33,6 @@
 
 <script type="text/javascript">
 	function submitForm(itemValue) {
-		console.log(itemValue);
 
 		var form = document.createElement("form");
 		form.method = "POST";
@@ -68,6 +67,15 @@
 
 		form.submit();
 	}
+	var mainMenu = '${mainMenu}';
+	$(document).ready(function() {
+		$("#mainMenu li").each(function(index) {
+			$('li a').removeClass("active");
+			if ($(this).text() == mainMenu) {
+				$(this).addClass("active");
+			}
+		});
+	});
 </script>
 </head>
 
@@ -89,8 +97,8 @@
 
 				<!-- Nav Starts -->
 				<div class="navbar-collapse  collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="${ContextPath}/index">Home</a></li>
+					<ul id="mainMenu" class="nav navbar-nav navbar-right">
+						<li><a href="${ContextPath}/index">Home</a></li>
 						<li><a href="${ContextPath}/agents">Agents</a></li>
 						<c:if test="${not empty currentUser}">
 							<c:choose>
@@ -121,11 +129,7 @@
 											<c:otherwise>
 												ADMIN
 											</c:otherwise>
-										</c:choose>
-<!-- 								</a></li> -->
-<!-- 								<li><a> -->
-									- 
-								<span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
+										</c:choose> <!-- 								</a></li> --> <!-- 								<li><a> --> - <span>${currentUser.firstName}</span> <span>${currentUser.lastName}</span></a></li>
 								<li>
 									<form method="get" action="${ContextPath}/logout">
 										<button id="logout">Log Out</button>

@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -43,6 +41,7 @@ public class PropertyUploadServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setAttribute("mainMenu", "Upload property");
 		request.getSession().setAttribute("agents", Agent.getAgentList());
 		response.sendRedirect("property_upload.jsp");
 	}

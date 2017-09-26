@@ -28,6 +28,7 @@ public class AgentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("agents", Agent.getAgentList());
+		request.setAttribute("mainMenu", "Agents");
 		RequestDispatcher rq = getServletContext().getRequestDispatcher("/agent.jsp");
 		rq.forward(request, response);
 	}

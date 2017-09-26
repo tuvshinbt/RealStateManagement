@@ -35,6 +35,7 @@ public class BookAppointmentListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setAttribute("mainMenu", "Appointments");
 		List<BookAppointment> appointments = new ArrayList<BookAppointment>();
 		try {
 			appointments = BookAppointmentDAO.findByStatus(1);

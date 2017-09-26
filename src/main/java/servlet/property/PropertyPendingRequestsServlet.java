@@ -35,9 +35,9 @@ public class PropertyPendingRequestsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setAttribute("mainMenu", "Pending requests");
 
 		List<Property> properties = new ArrayList<Property>();
-
 		try {
 			properties = PropertyDAO.getPropertyList(0, null, 0, 1, 0, null, 0, null, null, null);
 		} catch (Exception e) {

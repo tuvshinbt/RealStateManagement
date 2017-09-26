@@ -30,6 +30,7 @@ public class MainServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+		req.getSession().setAttribute("mainMenu", "Home");
 		// hot Properties
 		List<Property> hotProperties = new ArrayList<>();
 		try {
