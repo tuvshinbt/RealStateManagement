@@ -34,8 +34,6 @@
 									required="required">
 									<option value="1">Buyer</option>
 									<option value="2">Seller</option>
-									<option value="1">Buyer</option>
-									<option value="2">Seller</option>
 								</select>
 							</div>
 						</div>

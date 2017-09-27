@@ -96,8 +96,11 @@ public class PropertyItemServlet extends HttpServlet {
 			req.setAttribute("msg", "Please login to continue.");
 			req.getSession().setAttribute("redirecturl",
 					getServletContext().getAttribute("ContextPath") + "/property?id=" + propertyId + "#feedbackId");
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
-			rd.forward(req, res);
+//			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+//			rd.forward(req, res);
+//			res.sendRedirect("/login.jsp");
+			res.setContentType("application/json");
+			res.getWriter().write("{\"redirect\" : \"login.jsp\"}");
 		}
 	}
 }

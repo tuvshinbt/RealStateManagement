@@ -24,34 +24,41 @@
 						'comment': $("#comment").val()
 					},
 					success : function(responseObj) {
-						$('#feedbackBoard').html(function() { return'<div class="alert alert-success alert-dismissable">' + 
-								'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' +
-								'<strong>Successful!</strong>' +
-								'</div>'});
-						$feedbackHtml = '<div class="panel panel-default feedback">';
-						$feedbackHtml += '<div class="panel-heading feedback_header">';
-						$feedbackHtml += '(<b>';
-						if (responseObj.account.role  == 1) {
-							$feedbackHtml += 'Buyer';
-						} else if (responseObj.account.role  == 2) {
-							$feedbackHtml += 'Seller';
-						} else if (responseObj.account.role  == 3) {
-							$feedbackHtml += 'Agent';
-						} else {
-							$feedbackHtml += 'ADMIN';
+						if (responseObj.redirect != null) {
+							// data.redirect contains the string URL to redirect to
+							window.location.href = responseObj.redirect;
 						}
-						$feedbackHtml += '</b>) - ' + responseObj.account.firstName + ' ' + responseObj.account.lastName;
-						$feedbackHtml += '</div>';
-						$feedbackHtml += '<div class="panel-body feedback_content">';
-						$feedbackHtml += responseObj.comment;
-						$feedbackHtml += '<div>';
-						$feedbackHtml += 'Posted on :';
-						$feedbackHtml += responseObj.registerDate;
-						$feedbackHtml += '</div>';
-						$feedbackHtml += '</div>';
-						$feedbackHtml += '</div>';
-						$('#feedbackMsg').append($feedbackHtml);
-						$('#comment').val('');
+						else {
+							// data.form contains the HTML for the replacement form
+							$('#feedbackBoard').html(function() { return'<div class="alert alert-success alert-dismissable">' + 
+									'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' +
+									'<strong>Successful!</strong>' +
+									'</div>'});
+							$feedbackHtml = '<div class="panel panel-default feedback">';
+							$feedbackHtml += '<div class="panel-heading feedback_header">';
+							$feedbackHtml += '(<b>';
+							if (responseObj.account.role  == 1) {
+								$feedbackHtml += 'Buyer';
+							} else if (responseObj.account.role  == 2) {
+								$feedbackHtml += 'Seller';
+							} else if (responseObj.account.role  == 3) {
+								$feedbackHtml += 'Agent';
+							} else {
+								$feedbackHtml += 'ADMIN';
+							}
+							$feedbackHtml += '</b>) - ' + responseObj.account.firstName + ' ' + responseObj.account.lastName;
+							$feedbackHtml += '</div>';
+							$feedbackHtml += '<div class="panel-body feedback_content">';
+							$feedbackHtml += responseObj.comment;
+							$feedbackHtml += '<div>';
+							$feedbackHtml += 'Posted on :';
+							$feedbackHtml += responseObj.registerDate;
+							$feedbackHtml += '</div>';
+							$feedbackHtml += '</div>';
+							$feedbackHtml += '</div>';
+							$('#feedbackMsg').append($feedbackHtml);
+							$('#comment').val('');
+						}
 					},
 					progress : function() {
 						console.log('progress');

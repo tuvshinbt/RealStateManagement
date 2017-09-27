@@ -101,13 +101,17 @@
 						<li><a href="${ContextPath}/index">Home</a></li>
 						<li><a href="${ContextPath}/agents">Agents</a></li>
 						<c:if test="${not empty currentUser}">
-							<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
 							<c:choose>
 								<c:when test="${currentUser.role == 4}">
 									<li><a href="${ContextPath}/property/requests">Pending requests</a></li>
 								</c:when>
 							</c:choose>
-							<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
+							<c:choose>
+								<c:when test="${currentUser.role != 1}">
+									<li><a href="${ContextPath}/property/property_upload">Upload property</a></li>
+									<li><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
+								</c:when>
+							</c:choose>
 							<li><a href="${ContextPath}/order/list">Orders</a></li>
 						</c:if>
 						<c:choose>
@@ -185,10 +189,12 @@
 								<c:when test="${currentUser.role == 4}">
 									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/property/requests">Pending requests</a></li>
 								</c:when>
-								<c:otherwise>
-								</c:otherwise>
 							</c:choose>
-							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
+							<c:choose>
+								<c:when test="${currentUser.role != 1}">
+									<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/bookappointment/list">Appointments</a></li>
+								</c:when>
+							</c:choose>
 							<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/order/list">Orders</a></li>
 						</c:if>
 						<li class="col-lg-12 col-sm-12 col-xs-3"><a href="${ContextPath}/agents">Agents</a></li>

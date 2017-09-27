@@ -6,7 +6,7 @@
 
 	<div class="inside-banner">
 		<div class="container">
-			<span class="pull-right"><a href="${ContextPath}/index">Home</a> / <a href="register">Register</a></span>
+			<span class="pull-right"><a href="${ContextPath}/index">Home</a> / <a href="${ContextPath}/register">Register</a></span>
 			<h2>Register</h2>
 		</div>
 	</div>
@@ -28,6 +28,11 @@
 							<input type="password" class="form-control" placeholder="Password" name="password" required="required">
 						</div>
 						<button type="submit" class="btn btn-success" name="Submit">Login</button>
+						<div class="form-group">
+						</div>
+						<div class="form-group">
+							<a href="${ContextPath}/register" class="btn btn-warning btn-block"  class="form-control" role="button">Register</a>
+						</div>
 					</form>
 				</div>
 			</div>
